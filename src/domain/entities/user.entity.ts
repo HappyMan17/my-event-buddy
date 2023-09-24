@@ -1,31 +1,38 @@
 interface Props {
-  id: string;
-  name: string;
-  nickName: string;
+  user_id: string;
+  user_name: string;
+  nick_name: string;
   email: string;
   password: string;
-  isEnable: boolean;
+  is_enable: boolean;
   contacts?: string[];
   img?: string;
 }
 
 export class UserEntity {
-  public id: string;
-  public name: string;
-  public nickName: string;
+  public user_id: string;
+  public user_name: string;
+  public nick_name: string;
   public email: string;
   public password: string;
-  public isEnable: boolean;
+  public is_enable: boolean;
   public contacts?: string[];
   public img?: string;
   
   constructor(props: Props) {
-    this.id = props.id;
-    this.name = props.name;
-    this.nickName = props.nickName;
+    this.user_id = props.user_id;
+    this.user_name = props.user_name;
+    this.nick_name = props.nick_name;
     this.email = props.email;
     this.password = props.password;
-    this.isEnable = true;
+    this.is_enable = true;
+  }
+
+  getUserFields() {
+    return {
+      array: ['user_id', 'user_name' , 'nick_name', 'email', 'password', 'is_enable', 'contacts', 'img'],
+      string: 'user_id, user_name, nick_name, email, password, is_enable, contacts, img',
+    };
   }
 
 }

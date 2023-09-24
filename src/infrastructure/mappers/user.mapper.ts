@@ -1,24 +1,28 @@
 import { CustomError, UserEntity } from "../../domain";
 
 export class UserEntityMapper {
+  /**
+   * Builds a UserEntity from the db response
+   * @param object 
+   * @returns UserEntity
+   */
   static userEntityFromObject(object: {[key: string]: any}) {
+    
+    const { user_id, user_name, email, password, nick_name } = object;
 
-    const { id, _id, name, email, password, nickName } = object;
-
-    if (!_id || !id) throw CustomError.badRequest('Missing id');
-    if (!name) throw CustomError.badRequest('Missing name');
-    if (!nickName) throw CustomError.badRequest('Missing nick name');
+    if (!user_id) throw CustomError.badRequest('Missing user_');
+    if (!user_name) throw CustomError.badRequest('Missing nameuser_');
+    if (!nick_name) throw CustomError.badRequest('Missing nick name');
     if (!email) throw CustomError.badRequest('Missing email');
-    if (!password) throw CustomError.badRequest('Missing password');
-
+    if (!password) throw CustomError.badRequest('Missing password'); //todo remove
 
     return new UserEntity({
-      id: id || _id,
-      nickName,
-      name,
+      user_id: user_id,
+      nick_name,
+      user_name: user_name,
       email,
       password,
-      isEnable: true,
+      is_enable: true,
     })
   }
 }

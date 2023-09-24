@@ -3,6 +3,8 @@ import { RegisterUserDto } from "../../domain/dtos/auth/register-user.dto"
 import { AuthRepository, CustomError } from "../../domain";
 import { JwtAdapter } from "../../config/jwtAdapter";
 import { PostgresDb } from "../../data/postgres/postgres.database";
+import { UserModel } from "../../data/postgres";
+import { UserEntityMapper } from "../../infrastructure";
 
 export class AuthController {
     constructor(
@@ -29,7 +31,7 @@ export class AuthController {
       
       res.json({
         user,
-        token: await JwtAdapter.generateToken({id: user.id}),
+        token: await JwtAdapter.generateToken({id: user.user_id}),
       });
 
     })
@@ -44,14 +46,15 @@ export class AuthController {
   }
 
   // Get user
-  getUser = async (req: Request, res: Response) => {
-    const response = await PostgresDb.query({
-      query: 'SELECT * FROM users;',
-      params: [],
-    });
-    console.log({response})
-    // UserModel.find().then(users => res.json(users, token: req.body.token))
-
+  getUsers = async (req: Request, res: Response) => {
+    const response = await UserModel.getUsers();
+    if (response) {
+      // mapping
+      const users = response.map(user => UserEntityMapper.userEntityFromObject(user));
+      res.status(200).json(users);
+    } else {
+      res.status(200).json(response);
+    }
   }
 
 }

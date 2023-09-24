@@ -17,7 +17,7 @@ type QueryProps = {
 
 export class PostgresDb{
 
-  static async query({query, params}: QueryProps): Promise<UserEntity[] | null> {
+  static async query({query, params}: QueryProps): Promise<any[] | null> {
     try {
       const response = await pool.query(query, params)
       return response.rows;
@@ -32,7 +32,3 @@ export class PostgresDb{
     return time;
   }
 }
-
-// const getUsers = async (req, res) => {
-//   const response = await pool.query()
-// }

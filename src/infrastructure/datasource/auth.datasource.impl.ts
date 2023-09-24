@@ -20,7 +20,7 @@ export class AuthDatasourceImpl implements AuthDatasource {
 
   async register(registerUserDto: RegisterUserDto): Promise<UserEntity> {
 
-    const {name, nickName, email, password} = registerUserDto;
+    const {user_name, nick_name, email, password} = registerUserDto;
 
     try {
       
@@ -38,8 +38,8 @@ export class AuthDatasourceImpl implements AuthDatasource {
       //use the UserEntityMapper
       return UserEntityMapper
       .userEntityFromObject({
-        name,
-        nickName,
+        user_name,
+        nick_name,
         email,
         password,
       });

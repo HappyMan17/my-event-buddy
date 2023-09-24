@@ -2,6 +2,7 @@ CREATE TABLE users (
   user_id UUID NOT NULL,
   user_name VARCHAR(150) NOT NULL,
   nick_name VARCHAR(150) NOT NULL,
+  "password" VARCHAR(150) NOT NULL,
   email VARCHAR(150) NOT NULL,
   profile_image VARCHAR(150) NOT NULL,
   is_enable BOOLEAN,
