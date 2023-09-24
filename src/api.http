@@ -1,0 +1,8 @@
+###login
+GET http://localhost:3000/saludo
+
+### Auth
+GET http://localhost:3000/api/auth/all
+
+### prueba 3
+GET https://pokeapi.co/api/v2/pokemon/ditto
