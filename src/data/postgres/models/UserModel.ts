@@ -28,6 +28,21 @@ export class UserModel {
       return null;
     }
   }
+
+  static async checkUserEmailAlreadyExist(email: string): Promise<boolean> {
+    try {
+      const response = await PostgresDb.query({
+        query: "SELECT * FROM users WHERE email = $1;",
+        params: [email],
+      });
+      if (!response) {
+        return false;
+      }
+      return true;
+    } catch (error) {
+      return false;
+    }
+  }
   
   static async updateUserById(id: string, user: UserEntity): Promise<any | null> {
     try {

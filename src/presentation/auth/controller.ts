@@ -28,16 +28,15 @@ export class AuthController {
 
     this.authRepository.register(registerUserDto!)
     .then(async (user) => {
-      
       res.json({
         user,
         token: await JwtAdapter.generateToken({id: user.user_id}),
       });
 
+      res.json(registerUserDto);
     })
     .catch(error => this.handleError(error, res))
 
-    res.json(registerUserDto);
   }
 
   // Login user

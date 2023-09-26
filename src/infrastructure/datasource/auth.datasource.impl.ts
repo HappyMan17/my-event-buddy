@@ -1,4 +1,5 @@
 import { BcryptAdapter } from "../../config/bcrypt";
+import { UserModel } from "../../data/postgres";
 import { AuthDatasource } from "../../domain/";
 import { RegisterUserDto } from "../../domain/";
 import { UserEntity } from "../../domain/";
@@ -25,8 +26,12 @@ export class AuthDatasourceImpl implements AuthDatasource {
     try {
       
       // 1. Verificar si el correo existe
-      // look in the database by email
-      // if (exist) => throw CustomError('Email already exist');
+      const exist = await UserModel.checkUserEmailAlreadyExist(email);
+
+      if (exist) {
+        throw CustomError.badRequest('Email already exist');
+      }
+
       // await createNewUser({name, email, password})
       // 2. hash de contraseña.
       // const user = await UserModel.create({

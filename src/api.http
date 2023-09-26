@@ -4,5 +4,17 @@ GET http://localhost:3000/saludo
 ### Auth
 GET http://localhost:3000/api/auth/all
 
-### prueba 3
-GET https://pokeapi.co/api/v2/pokemon/ditto
+### register
+POST http://localhost:3010/api/auth/register
+content-type: application/json
+
+{
+    "user_id": "0ccd38fa-0ea5-4cd4-a876-77b9d6841106",
+    "user_name": "Sebastian",
+    "nick_name": "happy",
+    "password": "123456",
+    "email": "email@gmail.com",
+    "profile_image": ""
+}
+
+# insert INTO public.users (user_id, user_name, nick_name, password, email, profile_image) values ('0ccd39fa-0ea5-4cd4-a876-77b9d6841106', 'Sebastian', 'happy', '12345', 'email@gmail.com', '');
