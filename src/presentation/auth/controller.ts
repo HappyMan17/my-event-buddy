@@ -33,7 +33,7 @@ export class AuthController {
         token: await JwtAdapter.generateToken({id: user.user_id}),
       });
 
-      res.json(registerUserDto);
+      // res.json(registerUserDto);
     })
     .catch(error => this.handleError(error, res))
 

@@ -21,7 +21,7 @@ export class AuthDatasourceImpl implements AuthDatasource {
 
   async register(registerUserDto: RegisterUserDto): Promise<UserEntity> {
 
-    const {user_name, nick_name, email, password} = registerUserDto;
+    const {user_name, nick_name, email, password, profile_image} = registerUserDto;
 
     try {
       
@@ -32,15 +32,25 @@ export class AuthDatasourceImpl implements AuthDatasource {
         throw CustomError.badRequest('Email already exist');
       }
 
-      // await createNewUser({name, email, password})
       // 2. hash de contraseña.
-      // const user = await UserModel.create({
-      //   name, 
-      //   email, 
-      //   password: this.hashPassword(password),
-      // })
+      const newUser: UserEntity = {
+        user_id: '',
+        user_name,
+        nick_name,
+        email,
+        password: this.hashPassword(password),
+        profile_image,
+        is_enable: false,
+      };
+
+      const userCreated = await UserModel.createUser(newUser);
+
+      if (!userCreated) {
+        throw CustomError.badRequest('User Not Created')
+      }
+
       // 3. Mapear respuesta a nuestra entidad.
-      //use the UserEntityMapper
+      // configurar para no retornar la contrasena
       return UserEntityMapper
       .userEntityFromObject({
         user_name,

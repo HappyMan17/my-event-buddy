@@ -7,11 +7,12 @@ export class RegisterUserDto {
     public nick_name: string,
     public email: string,
     public password: string,
-  ) {}
+    public profile_image?: string,
+  ){}
 
   static create(object: {[key: string]: any}): [string?, RegisterUserDto?] {
 
-    const {user_name, email, password, nick_name} = object;
+    const { user_name, email, password, nick_name, profile_image } = object;
 
     if (!user_name) return ['Missing name', undefined];
     if (!nick_name) return ['Missing name', undefined];
@@ -27,6 +28,7 @@ export class RegisterUserDto {
         nick_name,
         email,
         password,
+        profile_image,
       ),
     ];
   }

@@ -50,12 +50,12 @@ export class UserModel {
         query: `
         UPDATE users 
         SET 
-          name = $1,
-          nickname = $2,
+          user_name = $1,
+          nick_name = $2,
           email = $3,
           password = $4,
-          isEnable = $5,
-          img = $6
+          is_enable = $5,
+          profile_image = $6
         WHERE id = $7;
       `,
         params: [
@@ -64,8 +64,40 @@ export class UserModel {
           user.email,
           user.password,
           user.is_enable.toString(), //bolean
-          user.img || '',
+          user.profile_image || '',
           user.user_id,
+        ],
+      });
+            
+      return response;
+    } catch (error) {
+      return null;
+    }
+  }
+
+  static async createUser(user: UserEntity): Promise<any | null> {
+    try {
+      const response = await PostgresDb.query({
+        query: `
+        INSERT INTO users 
+        (
+          user_id,
+          user_name,
+          nick_name,
+          email,
+          password,
+          is_enable,
+          profile_image,
+        ) VALUES ($1, $2, $3, $4, $5, $6, $7);
+      `,
+        params: [
+          user.user_id,
+          user.user_name,
+          user.nick_name,
+          user.email,
+          user.password,
+          user.is_enable.toString(), //bolean
+          user.profile_image || '',
         ],
       });
             
