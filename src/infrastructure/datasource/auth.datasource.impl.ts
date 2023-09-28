@@ -1,32 +1,29 @@
-import { BcryptAdapter } from "../../config/";
-import { UserModel } from "../../data/postgres";
-import { AuthDatasource, RegisterUserDto, UserEntity, CustomError } from "../../domain/";
-import { UserEntityMapper } from "../mappers/";
+import { BcryptAdapter } from '../../config/'
+import { UserModel } from '../../data/postgres'
+import { AuthDatasource, RegisterUserDto, UserEntity, CustomError } from '../../domain/'
+import { UserEntityMapper } from '../mappers/'
 
-type HashFunction = (password: string) => string;
-type CompareFunction = (password: string, hashed: string) => boolean;
+type HashFunction = (password: string) => string
+type CompareFunction = (password: string, hashed: string) => boolean
 
 export class AuthDatasourceImpl implements AuthDatasource {
-
-  constructor(
+  constructor (
     // hidden dependency broken, but dependency used as default
-    // now we have an option to use another passed throw the 
+    // now we have an option to use another passed throw the
     // constructor
     private readonly hashPassword: HashFunction = BcryptAdapter.hash,
-    private readonly comparePassword: CompareFunction = BcryptAdapter.compare,
+    private readonly comparePassword: CompareFunction = BcryptAdapter.compare
   ) {}
 
-  async register(registerUserDto: RegisterUserDto): Promise<UserEntity> {
-
-    const {user_name, nick_name, email, password, profile_image} = registerUserDto;
+  async register (registerUserDto: RegisterUserDto): Promise<UserEntity> {
+    const { user_name, nick_name, email, password, profile_image } = registerUserDto
 
     try {
-      
       // 1. Verificar si el correo existe
-      const exist = await UserModel.checkUserEmailAlreadyExist(email);
+      const exist = await UserModel.checkUserEmailAlreadyExist(email)
 
       if (exist) {
-        throw CustomError.badRequest('Email already exist');
+        throw CustomError.badRequest('Email already exist')
       }
 
       // 2. hash de contraseña.
@@ -37,10 +34,10 @@ export class AuthDatasourceImpl implements AuthDatasource {
         email,
         password: this.hashPassword(password),
         profile_image,
-        is_enable: false,
-      };
+        is_enable: false
+      }
 
-      const userCreated = await UserModel.createUser(newUser);
+      const userCreated = await UserModel.createUser(newUser)
 
       if (!userCreated) {
         throw CustomError.badRequest('User Not Created')
@@ -49,19 +46,17 @@ export class AuthDatasourceImpl implements AuthDatasource {
       // 3. Mapear respuesta a nuestra entidad.
       // configurar para no retornar la contrasena
       return UserEntityMapper
-      .userEntityFromObject({
-        user_name,
-        nick_name,
-        email,
-        password,
-      });
-
+        .userEntityFromObject({
+          user_name,
+          nick_name,
+          email,
+          password
+        })
     } catch (error) {
       if (error instanceof CustomError) {
-        throw error;
+        throw error
       }
       throw CustomError.internalServer()
     }
-
   }
 }

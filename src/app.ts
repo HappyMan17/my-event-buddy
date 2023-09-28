@@ -1,17 +1,15 @@
-import { envs } from './config';
-import { AppRoutes } from './presentation/routes';
+import { envs } from './config'
+import { AppRoutes } from './presentation/routes'
 import { Server } from './presentation/server'
 
 (() => {
-  main();
+  void main()
 })()
 
-async function main() {
-
-  new Server()
-  .start({
-    port: envs.PORT,
-    routes: AppRoutes.routes,
-  });
-
+async function main () {
+  await new Server()
+    .start({
+      port: envs.PORT,
+      routes: AppRoutes.routes
+    })
 }

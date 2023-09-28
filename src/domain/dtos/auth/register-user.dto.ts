@@ -1,25 +1,23 @@
-import { Validators } from "../../../config/validators";
-
+import { Validators } from '../../../config/validators'
 
 export class RegisterUserDto {
-  private constructor(
+  private constructor (
     public user_name: string,
     public nick_name: string,
     public email: string,
     public password: string,
-    public profile_image?: string,
-  ){}
+    public profile_image?: string
+  ) {}
 
-  static create(object: {[key: string]: any}): [string?, RegisterUserDto?] {
+  static create (object: Record<string, any | null>): [string?, RegisterUserDto?] {
+    const { user_name, email, password, nick_name, profile_image } = object
 
-    const { user_name, email, password, nick_name, profile_image } = object;
-
-    if (!user_name) return ['Missing name', undefined];
-    if (!nick_name) return ['Missing name', undefined];
-    if (!email) return ['Missing email', undefined];
-    if (!Validators.email.test(email)) return ['Email is not valid', undefined];
-    if (!password) return ['Missing name', undefined];
-    if (password.length < 6) return ['Missing too short', undefined];
+    if (!user_name) return ['Missing name', undefined]
+    if (!nick_name) return ['Missing name', undefined]
+    if (!email) return ['Missing email', undefined]
+    if (!Validators.email.test(email)) return ['Email is not valid', undefined]
+    if (!password) return ['Missing name', undefined]
+    if (password.length < 6) return ['Missing too short', undefined]
 
     return [
       undefined,
@@ -28,8 +26,8 @@ export class RegisterUserDto {
         nick_name,
         email,
         password,
-        profile_image,
-      ),
-    ];
+        profile_image
+      )
+    ]
   }
 }

@@ -1,45 +1,38 @@
-import jwt from 'jsonwebtoken';
-import { envs } from './envs';
+import jwt from 'jsonwebtoken'
+import { envs } from './envs'
 
-const JWT_SEED = envs.JWT_SEED;
+const JWT_SEED = envs.JWT_SEED
 
 export class JwtAdapter {
-
-  static async generateToken(
+  static async generateToken (
     payload: any,
     duration: string = '2h'
   ): Promise<string | null> {
-    
-    return new Promise((resolve) => {
-
-      jwt.sign(payload, JWT_SEED, {expiresIn: duration}, (err, token) => {
-      
-        if (err) return resolve(null);
-      
-        resolve(token!);
-      
-      });
+    return await new Promise((resolve) => {
+      jwt.sign(payload, JWT_SEED, { expiresIn: duration }, (err, token) => {
+        if (err) {
+          resolve(null)
+          return
+        }
+        resolve(token!)
+      })
     })
-  
   }
 
   /**
    * Decodes the token to get the payload
-   * @param token 
+   * @param token
    * @returns payload
    */
-  static validateToken<T>(token: string): Promise<T | null> {
-    return new Promise((resolve) => {
-        
+  static async validateToken<T> (token: string): Promise<T | null> {
+    return await new Promise((resolve) => {
       jwt.verify(token, JWT_SEED, (err, decoded) => {
-
-        if (err) return resolve(null);
-
-        resolve(decoded as T);
-   
+        if (err) {
+          resolve(null)
+          return
+        }
+        resolve(decoded as T)
       })
-    
     })
   }
-
 }

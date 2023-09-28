@@ -1,50 +1,48 @@
-import { UserEntity } from "../../../domain";
-import { PostgresDb } from "../postgres.database";
-
+import { UserEntity } from '../../../domain'
+import { PostgresDb } from '../postgres.database'
 
 export class UserModel {
-  
-  static async getUsers(): Promise<any[] | null> {
+  static async getUsers (): Promise<any[] | null> {
     try {
       const response = await PostgresDb.query({
         query: 'SELECT * FROM users;',
-        params: [],
-      });
-      return response;
+        params: []
+      })
+      return response
     } catch (error) {
-      return null;
+      return null
     }
   }
-  
-  static async getUserById(id: string): Promise<any | null> {
+
+  static async getUserById (id: string): Promise<any | null> {
     try {
       const response = await PostgresDb.query({
         query: 'SELECT * FROM users WHERE id = "$1";',
-        params: [id],
-      });
+        params: [id]
+      })
 
-      return response;
+      return response
     } catch (error) {
-      return null;
+      return null
     }
   }
 
-  static async checkUserEmailAlreadyExist(email: string): Promise<boolean> {
+  static async checkUserEmailAlreadyExist (email: string): Promise<boolean> {
     try {
       const response = await PostgresDb.query({
-        query: "SELECT * FROM users WHERE email = $1;",
-        params: [email],
-      });
+        query: 'SELECT * FROM users WHERE email = $1;',
+        params: [email]
+      })
       if (!response) {
-        return false;
+        return false
       }
-      return true;
+      return true
     } catch (error) {
-      return false;
+      return false
     }
   }
-  
-  static async updateUserById(id: string, user: UserEntity): Promise<any | null> {
+
+  static async updateUserById (id: string, user: UserEntity): Promise<any | null> {
     try {
       const response = await PostgresDb.query({
         query: `
@@ -63,19 +61,19 @@ export class UserModel {
           user.nick_name,
           user.email,
           user.password,
-          user.is_enable.toString(), //bolean
-          user.profile_image || '',
-          user.user_id,
-        ],
-      });
-            
-      return response;
+          user.is_enable.toString(), // bolean
+          user.profile_image ?? '',
+          user.user_id
+        ]
+      })
+
+      return response
     } catch (error) {
-      return null;
+      return null
     }
   }
 
-  static async createUser(user: UserEntity): Promise<any | null> {
+  static async createUser (user: UserEntity): Promise<any | null> {
     try {
       const response = await PostgresDb.query({
         query: `
@@ -96,15 +94,14 @@ export class UserModel {
           user.nick_name,
           user.email,
           user.password,
-          user.is_enable.toString(), //bolean
-          user.profile_image || '',
-        ],
-      });
-            
-      return response;
+          user.is_enable.toString(), // bolean
+          user.profile_image ?? ''
+        ]
+      })
+
+      return response
     } catch (error) {
-      return null;
+      return null
     }
   }
-
 }

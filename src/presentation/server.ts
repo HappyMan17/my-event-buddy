@@ -1,4 +1,4 @@
-import express, { Router } from 'express';
+import express, { Router } from 'express'
 
 interface StartOptions {
   port?: number;
@@ -6,24 +6,22 @@ interface StartOptions {
 }
 
 export class Server {
-  private app = express();
+  private readonly app = express()
 
-  public async start(options: StartOptions) {
-    //middlewares
-    this.setupMiddlewares();
-
+  public async start (options: StartOptions) {
+    // middlewares
+    this.setupMiddlewares()
 
     // Using defined routes
     this.app.use(options.routes)
 
     // Listening on port
     this.app.listen(options.port, () => {
-      console.log(`Server running on this.port ${options.port}`);
+      console.log(`Server running on this.port ${options.port}`)
     })
   }
 
-  private setupMiddlewares() {
-    this.app.use(express.json());
+  private setupMiddlewares () {
+    this.app.use(express.json())
   }
-
 }
