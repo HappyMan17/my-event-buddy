@@ -1,8 +1,7 @@
 import { Request, Response } from "express"
-import { RegisterUserDto } from "../../domain/dtos/auth/register-user.dto"
+import { RegisterUserDto } from "../../domain/dtos/"
 import { AuthRepository, CustomError } from "../../domain";
-import { JwtAdapter } from "../../config/jwtAdapter";
-import { PostgresDb } from "../../data/postgres/postgres.database";
+import { JwtAdapter } from "../../config/";
 import { UserModel } from "../../data/postgres";
 import { UserEntityMapper } from "../../infrastructure";
 
@@ -28,16 +27,15 @@ export class AuthController {
 
     this.authRepository.register(registerUserDto!)
     .then(async (user) => {
-      
       res.json({
         user,
         token: await JwtAdapter.generateToken({id: user.user_id}),
       });
 
+      // res.json(registerUserDto);
     })
     .catch(error => this.handleError(error, res))
 
-    res.json(registerUserDto);
   }
 
   // Login user

@@ -1,6 +1,5 @@
 import { Pool } from 'pg';
 import { envs } from '../../config/envs';
-import { UserEntity } from '../../domain';
 
 const pool = new Pool({
   host: 'localhost',

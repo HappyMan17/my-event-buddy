@@ -1,13 +1,16 @@
+// eslint-disable-next-line no-undef
 module.exports = {
   root: true,
   parser: '@typescript-eslint/parser',
   plugins: [
-    '@typescript-eslint'
+    '@typescript-eslint/eslint-plugin'
   ],
   extends: [
     'eslint:recommended',
     'plugin:@typescript-eslint/eslint-recommended',
-    'plugin:@typescript-eslint/recommended',
-    './node_modules/ts-standard/eslintrc.json'
-  ]
+    'plugin:@typescript-eslint/recommended'
+  ],
+  rules: {
+    "@typescript-eslint/no-explicit-any": 'off',
+  }
 }
