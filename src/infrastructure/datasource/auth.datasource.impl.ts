@@ -1,8 +1,5 @@
 import { BcryptAdapter } from "../../config/bcrypt";
-import { AuthDatasource } from "../../domain/";
-import { RegisterUserDto } from "../../domain/";
-import { UserEntity } from "../../domain/";
-import { CustomError } from "../../domain/";
+import { AuthDatasource, RegisterUserDto, UserEntity, CustomError } from "../../domain/";
 import { UserEntityMapper } from "../mappers/user.mapper";
 
 type HashFunction = (password: string) => string;
