@@ -23,5 +23,6 @@ export class Server {
 
   private setupMiddlewares () {
     this.app.use(express.json())
+    this.app.use(express.urlencoded({ extended: true }))
   }
 }

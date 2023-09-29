@@ -33,10 +33,14 @@ export class UserModel {
         query: 'SELECT * FROM users WHERE email = $1;',
         params: [email]
       })
+
       if (!response) {
         return false
       }
-      return true
+      if (response.length > 0) {
+        return true
+      }
+      return false
     } catch (error) {
       return false
     }
@@ -85,7 +89,7 @@ export class UserModel {
           email,
           password,
           is_enable,
-          profile_image,
+          profile_image
         ) VALUES ($1, $2, $3, $4, $5, $6, $7);
       `,
         params: [

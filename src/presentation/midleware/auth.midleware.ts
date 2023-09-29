@@ -4,8 +4,12 @@ import { JwtAdapter } from '../../config/'
 export class AuthMiddleware {
   static validateJWT = async (req: Request, res: Response, next: NextFunction) => {
     const authorization = req.header('Authorization')
+
     if (!authorization) return res.status(401).json({ error: 'No token provided' })
-    if (authorization.startsWith('Bearer ')) return res.status(401).json({ error: 'No Bearer token provided' })
+
+    if (authorization.startsWith('Bearer ')) {
+      return res.status(401).json({ error: 'No Bearer token provided' })
+    }
 
     const token = authorization.split(' ').at(1) ?? ''
 

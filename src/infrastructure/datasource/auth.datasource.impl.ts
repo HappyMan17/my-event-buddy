@@ -1,7 +1,7 @@
-import { BcryptAdapter } from '../../config/'
+import { BcryptAdapter, UuidAdapter } from '../../config/'
 import { UserModel } from '../../data/postgres'
 import { AuthDatasource, RegisterUserDto, UserEntity, CustomError } from '../../domain/'
-import { UserEntityMapper } from '../mappers/'
+import { UserEntityMapper } from '../mappers'
 
 type HashFunction = (password: string) => string
 type CompareFunction = (password: string, hashed: string) => boolean
@@ -27,15 +27,15 @@ export class AuthDatasourceImpl implements AuthDatasource {
       }
 
       // 2. hash de contraseña.
-      const newUser: UserEntity = {
-        user_id: '',
+      const newUser = new UserEntity(
+        UuidAdapter.generateV4uuid(),
         user_name,
         nick_name,
         email,
-        password: this.hashPassword(password),
-        profile_image,
-        is_enable: false
-      }
+        this.hashPassword(password),
+        false,
+        profile_image
+      )
 
       const userCreated = await UserModel.createUser(newUser)
 
@@ -43,15 +43,14 @@ export class AuthDatasourceImpl implements AuthDatasource {
         throw CustomError.badRequest('User Not Created')
       }
 
-      // 3. Mapear respuesta a nuestra entidad.
-      // configurar para no retornar la contrasena
-      return UserEntityMapper
-        .userEntityFromObject({
-          user_name,
-          nick_name,
-          email,
-          password
-        })
+      return UserEntityMapper.userEntityFromObject({
+        user_id: newUser.user_id,
+        user_name,
+        email,
+        password: newUser.password,
+        nick_name,
+        profile_image
+      })
     } catch (error) {
       if (error instanceof CustomError) {
         throw error

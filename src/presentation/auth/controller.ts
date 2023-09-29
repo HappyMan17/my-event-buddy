@@ -16,18 +16,25 @@ export class AuthController {
     if (error instanceof CustomError) {
       return res.status(error.statusCode).json({ error: error.message })
     }
-
     console.log(error) // Winston recommended
+
     return res.status(500).json({ error: 'Internal Server Error' })
   }
 
-  // Register User
+  /**
+   * Register user
+   * @param req
+   * @param res
+   * @returns http response
+   */
   registerUser = (req: Request, res: Response) => {
+    // using dto to filter the req.body
     const [error, registerUserDto] = RegisterUserDto.create(req.body)
 
+    // attributes not found in the dto:
     if (error) return res.status(400).json({ error })
 
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    // Register user:
     this.authRepository.register(registerUserDto!)
       .then(async (user) => {
         res.json({
@@ -38,12 +45,22 @@ export class AuthController {
       .catch(error => this.handleError(error, res))
   }
 
-  // Login user
+  /**
+   * Loggin user //todo
+   * @param req
+   * @param res
+   * @returns http response
+   */
   loginUser = async (req: Request, res: Response) => {
     res.json('loginUser controller')
   }
 
-  // Get user
+  /**
+  * Get all users
+  * @param req
+  * @param res
+  * @returns http response
+  */
   getUsers = async (req: Request, res: Response): Promise<void> => {
     const response = await UserModel.getUsers()
     if (response) {
