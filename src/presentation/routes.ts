@@ -8,6 +8,9 @@ export class AppRoutes {
 
     // define main routes
     router.use('/api/auth', AuthRoutes.routes)
+    router.get('/', (req, res) => {
+      res.json({ message: 'main route' })
+    })
 
     // router.get('/api/', AuthMiddleware.validateJWT, UserRoutes.routes);
 
