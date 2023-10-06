@@ -15,13 +15,13 @@ export class AuthRoutes {
     // define main routes
     // router.post('/login', controller.loginUser);
 
-    router.put('/register', controller.registerUser)
+    router.post('/register', controller.registerUser)
 
     // router.get('/', AuthMiddleware.validateJWT, controller.getUser);
     router.get('/all', controller.getUsers)
 
     // default url
-    router.use('/', (req, res) => {
+    router.use('/*', (req, res) => {
       res.status(400).json({ message: 'route not found' })
     })
 

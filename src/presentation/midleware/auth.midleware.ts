@@ -17,10 +17,11 @@ export class AuthMiddleware {
       const payload = await JwtAdapter.validateToken(token)
       if (!payload) return res.status(401).json({ error: 'Invalid token provided' })
 
-      // const user = await UserModel.findById(payload.id);
+      // const user = await UserModel.getUserById(payload.id);
+      // if (!user) return res.status(401).json({ error: 'invalid token - user not found' })
 
       // Payload added to the req body
-      req.body.payload = payload
+      // req.body.user = user
 
       next()
     } catch (error) {
