@@ -1,7 +1,7 @@
 import { BcryptAdapter, UuidAdapter } from '../../config/'
 import { UserModel } from '../../data/postgres'
 import { AuthDatasource, RegisterUserDto, UserEntity, CustomError } from '../../domain/'
-import { UserEntityMapper } from '../mappers'
+import { UserFromRegister } from '../../domain/dtos'
 
 type HashFunction = (password: string) => string
 type CompareFunction = (password: string, hashed: string) => boolean
@@ -15,7 +15,7 @@ export class AuthDatasourceImpl implements AuthDatasource {
     private readonly comparePassword: CompareFunction = BcryptAdapter.compare
   ) {}
 
-  async register (registerUserDto: RegisterUserDto): Promise<UserEntity> {
+  async register (registerUserDto: RegisterUserDto): Promise<UserFromRegister> {
     const { user_name, nick_name, email, password, profile_image } = registerUserDto
 
     try {
@@ -33,7 +33,7 @@ export class AuthDatasourceImpl implements AuthDatasource {
         nick_name,
         email,
         this.hashPassword(password),
-        false,
+        true,
         profile_image
       )
 
@@ -43,14 +43,13 @@ export class AuthDatasourceImpl implements AuthDatasource {
         throw CustomError.badRequest('User Not Created')
       }
 
-      return UserEntityMapper.userEntityFromObject({
+      return {
         user_id: newUser.user_id,
         user_name,
         email,
-        password: newUser.password,
         nick_name,
         profile_image
-      })
+      }
     } catch (error) {
       if (error instanceof CustomError) {
         throw error
