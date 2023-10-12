@@ -1,6 +1,11 @@
 import { UserEntity } from '../../../domain'
 import { PostgresDb } from '../postgres.database'
 
+interface GetUserByProps {
+  field: string;
+  value: any;
+}
+
 export class UserModel {
   static async getUsers (): Promise<any[] | null> {
     try {
@@ -14,13 +19,16 @@ export class UserModel {
     }
   }
 
-  static async getUserById (id: string): Promise<any | null> {
+  static async getUserBy ({ field, value }: GetUserByProps): Promise<any | null> {
     try {
       const response = await PostgresDb.query({
-        query: 'SELECT * FROM users WHERE id = "$1";',
-        params: [id]
+        query: `SELECT * FROM users WHERE ${field} = $1;`,
+        params: [value]
       })
 
+      if (response?.length === 0) {
+        return null
+      }
       return response
     } catch (error) {
       return null

@@ -1,7 +1,7 @@
 import { BcryptAdapter, UuidAdapter } from '../../config/'
 import { UserModel } from '../../data/postgres'
 import { AuthDatasource, RegisterUserDto, UserEntity, CustomError } from '../../domain/'
-import { UserFromRegister } from '../../domain/dtos'
+import { LoginUserDto, UserFromLogin, UserFromRegister } from '../../domain/dtos'
 
 type HashFunction = (password: string) => string
 type CompareFunction = (password: string, hashed: string) => boolean
@@ -49,6 +49,34 @@ export class AuthDatasourceImpl implements AuthDatasource {
         email,
         nick_name,
         profile_image
+      }
+    } catch (error) {
+      if (error instanceof CustomError) {
+        throw error
+      }
+      throw CustomError.internalServer()
+    }
+  }
+
+  async login (loginUserDto: LoginUserDto): Promise<UserFromLogin> {
+    const { email, password } = loginUserDto
+    try {
+      // 1. Verificar si el correo existe
+      const usersFound = await UserModel.getUserBy({ field: 'email', value: email })
+
+      if (!usersFound) {
+        throw CustomError.badRequest('invalid email or password')
+      }
+
+      const user = usersFound[0]
+
+      if (!this.comparePassword(password, user.password)) {
+        throw CustomError.badRequest('invalid password')
+      }
+      return {
+        user_id: user.user_id,
+        user_name: user.user_name,
+        email
       }
     } catch (error) {
       if (error instanceof CustomError) {

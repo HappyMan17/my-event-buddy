@@ -1,6 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/consistent-type-imports
 import { Request, Response } from 'express'
-import { RegisterUserDto } from '../../domain/dtos/'
+import { LoginUserDto, RegisterUserDto } from '../../domain/dtos/'
 import { AuthRepository, CustomError } from '../../domain'
 import { JwtAdapter } from '../../config/'
 import { UserModel } from '../../data/postgres'
@@ -38,8 +38,8 @@ export class AuthController {
     this.authRepository.register(registerUserDto!)
       .then(async (user) => {
         res.json({
-          user,
-          token: await JwtAdapter.generateToken({ id: user.user_id })
+          user
+          // token: await JwtAdapter.generateToken({ id: user.user_id })
         })
       })
       .catch(error => this.handleError(error, res))
@@ -52,7 +52,21 @@ export class AuthController {
    * @returns http response
    */
   loginUser = async (req: Request, res: Response) => {
-    res.json('loginUser controller')
+    // using dto to filter the req.body
+    const [error, loginUserDto] = LoginUserDto.create(req.body)
+
+    // attributes not found in the dto:
+    if (error) return res.status(400).json({ error })
+
+    // Register user:
+    this.authRepository.login(loginUserDto!)
+      .then(async (user) => {
+        res.json({
+          user,
+          token: await JwtAdapter.generateToken({ id: user.user_id })
+        })
+      })
+      .catch(error => this.handleError(error, res))
   }
 
   /**

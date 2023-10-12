@@ -1,9 +1,6 @@
 ### pokemon
 GET https://pokeapi.co/api/v2/pokemon/ditto
 
-###login
-GET http://localhost:3000/
-
 ### Auth
 GET http://localhost:3000/api/auth/all
 
@@ -18,6 +15,15 @@ content-type: application/json
     "password": "12345678",
     "email": "email-quince@gmail.com",
     "profile_image": ""
+}
+
+### login
+POST http://localhost:3000/api/auth/login
+content-type: application/json
+
+{
+    "email": "email-trece@gmail.com",
+    "password": "12345678"
 }
 
 # insert INTO public.users (user_id, user_name, nick_name, password, email, profile_image) values ('0ccd39fa-0ea5-4cd4-a876-77b9d6841106', 'Sebastian', 'happy', '12345', 'email@gmail.com', '');

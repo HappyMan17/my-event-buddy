@@ -5,3 +5,5 @@ export interface UserFromRegister {
   nick_name: string,
   profile_image?: string,
 }
+
+export type UserFromLogin = Omit<UserFromRegister, 'nick_name'>

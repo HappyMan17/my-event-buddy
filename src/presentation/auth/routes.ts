@@ -13,7 +13,7 @@ export class AuthRoutes {
     const controller = new AuthController(authRepository)
 
     // define main routes
-    // router.post('/login', controller.loginUser);
+    router.post('/login', controller.loginUser)
 
     router.post('/register', controller.registerUser)
 
