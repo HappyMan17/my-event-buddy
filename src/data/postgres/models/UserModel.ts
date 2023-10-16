@@ -1,4 +1,5 @@
 import { UserEntity } from '../../../domain'
+import { UserToUpdate } from '../../../domain/dtos'
 import { PostgresDb } from '../postgres.database'
 
 interface GetUserByProps {
@@ -54,7 +55,7 @@ export class UserModel {
     }
   }
 
-  static async updateUserById (id: string, user: UserEntity): Promise<any | null> {
+  static async updateUserById (user: UserToUpdate): Promise<any | null> {
     try {
       const response = await PostgresDb.query({
         query: `
@@ -62,18 +63,12 @@ export class UserModel {
         SET 
           user_name = $1,
           nick_name = $2,
-          email = $3,
-          password = $4,
-          is_enable = $5,
-          profile_image = $6
-        WHERE id = $7;
+          profile_image = $3
+        WHERE id = $4;
       `,
         params: [
           user.user_name,
           user.nick_name,
-          user.email,
-          user.password,
-          user.is_enable.toString(), // bolean
           user.profile_image ?? '',
           user.user_id
         ]

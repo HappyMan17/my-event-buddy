@@ -11,7 +11,6 @@ export class AuthController {
     private readonly authRepository: AuthRepository
   ) {}
 
-  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   private readonly handleError = (error: unknown, res: Response) => {
     if (error instanceof CustomError) {
       return res.status(error.statusCode).json({ error: error.message })

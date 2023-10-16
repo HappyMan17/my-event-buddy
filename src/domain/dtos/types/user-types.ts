@@ -7,3 +7,5 @@ export interface UserFromRegister {
 }
 
 export type UserFromLogin = Omit<UserFromRegister, 'nick_name'>
+
+export type UserToUpdate = Omit<UserFromRegister, 'email'>

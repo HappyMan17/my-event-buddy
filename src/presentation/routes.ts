@@ -8,6 +8,8 @@ export class AppRoutes {
 
     // define main routes
     router.use('/api/auth', AuthRoutes.routes)
+    router.use('/api/auth/user', AuthRoutes.routes)
+
     router.get('/', (req, res) => {
       res.json({ message: 'main route' })
     })
