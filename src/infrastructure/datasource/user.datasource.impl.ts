@@ -15,11 +15,15 @@ export class UserDatasourceImpl implements UserDatasource {
 
       const user = await UserModel.updateUserById(newUserAttributes)
 
+      if (!user) {
+        throw CustomError.badRequest('User Not Updated')
+      }
+
       return {
-        user_id: user.user_id,
-        user_name: user.user_name,
-        nick_name: user.nick_name,
-        profile_image: user.profile_image
+        user_id,
+        user_name,
+        nick_name,
+        profile_image
       }
     } catch (error) {
       if (error instanceof CustomError) {

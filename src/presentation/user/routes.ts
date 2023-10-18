@@ -1,24 +1,25 @@
 import { Router } from 'express'
-import { UserDatasourceImpl, AuthRepositoryImpl } from '../../infrastructure'
+import { UserDatasourceImpl, UserRepositoryImpl } from '../../infrastructure'
+import { UserController } from './UserController'
 // import { AuthController } from './controller'
 
-export class AuthRoutes {
+export class UserRoutes {
   static get routes (): Router {
     const router = Router()
 
     // data source with postgres:
-    const datasource = new UpdateDatasourceImpl()
-    const authRepository = new AuthRepositoryImpl(datasource)
+    const datasource = new UserDatasourceImpl()
+    const UserRepository = new UserRepositoryImpl(datasource)
 
-    const controller = new AuthController(authRepository)
+    const controller = new UserController(UserRepository)
 
-    // define main routes
+    // routes:
     // router.get('/', AuthMiddleware.validateJWT, controller.getUser);
-    router.put('/update', controller.registerUser)
+    router.put('/update', controller.updateUser)
 
     // default url
     router.use('/*', (req, res) => {
-      res.status(400).json({ message: 'route not found' })
+      res.status(400).json({ message: 'user route not found' })
     })
 
     return router

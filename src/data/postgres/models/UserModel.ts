@@ -20,7 +20,7 @@ export class UserModel {
     }
   }
 
-  static async getUserBy ({ field, value }: GetUserByProps): Promise<any | null> {
+  static async getUserBy ({ field, value }: GetUserByProps): Promise<any[] | null> {
     try {
       const response = await PostgresDb.query({
         query: `SELECT * FROM users WHERE ${field} = $1;`,
@@ -55,17 +55,14 @@ export class UserModel {
     }
   }
 
-  static async updateUserById (user: UserToUpdate): Promise<any | null> {
+  static async updateUserById (user: UserToUpdate): Promise<any[] | null> {
     try {
       const response = await PostgresDb.query({
         query: `
-        UPDATE users 
-        SET 
-          user_name = $1,
-          nick_name = $2,
-          profile_image = $3
-        WHERE id = $4;
-      `,
+          UPDATE users
+          SET (user_name, nick_name, profile_image) = ($1, $2, $3)
+          WHERE user_id = $4;
+        `,
         params: [
           user.user_name,
           user.nick_name,
@@ -80,21 +77,21 @@ export class UserModel {
     }
   }
 
-  static async createUser (user: UserEntity): Promise<any | null> {
+  static async createUser (user: UserEntity): Promise<any[] | null> {
     try {
       const response = await PostgresDb.query({
         query: `
-        INSERT INTO users 
-        (
-          user_id,
-          user_name,
-          nick_name,
-          email,
-          password,
-          is_enable,
-          profile_image
-        ) VALUES ($1, $2, $3, $4, $5, $6, $7);
-      `,
+          INSERT INTO users 
+          (
+            user_id,
+            user_name,
+            nick_name,
+            email,
+            password,
+            is_enable,
+            profile_image
+          ) VALUES ($1, $2, $3, $4, $5, $6, $7);
+        `,
         params: [
           user.user_id,
           user.user_name,
