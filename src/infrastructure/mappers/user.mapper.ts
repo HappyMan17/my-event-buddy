@@ -18,8 +18,8 @@ export class UserEntityMapper {
 
       return new UserEntity(
         user_id,
-        nick_name,
         user_name,
+        nick_name,
         email,
         password,
         true,
