@@ -2,7 +2,7 @@ import { Pool } from 'pg'
 import { envs } from '../../config/envs'
 
 const pool = new Pool({
-  host: 'localhost',
+  host: 'db',
   user: envs.POSTGRES_USER,
   password: envs.POSTGRES_PASSWORD,
   database: envs.POSTGRES_DB,
