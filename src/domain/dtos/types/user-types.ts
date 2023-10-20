@@ -6,6 +6,6 @@ export interface UserFromRegister {
   profile_image?: string,
 }
 
-export type UserFromLogin = Omit<UserFromRegister, 'nick_name'>
+export type UserFromLogin = UserFromRegister
 
 export type UserToUpdate = Omit<UserFromRegister, 'email'>

@@ -76,6 +76,7 @@ export class AuthDatasourceImpl implements AuthDatasource {
       return {
         user_id: user.user_id,
         user_name: user.user_name,
+        nick_name: user.nick_name,
         email
       }
     } catch (error) {
