@@ -12,8 +12,6 @@ RUN npm install
 
 COPY . .
 
-ENV HOST=db
-
 EXPOSE 3000
 
 CMD [ "npm", "run", "dev" ]
