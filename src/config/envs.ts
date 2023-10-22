@@ -2,6 +2,7 @@ import 'dotenv/config'
 import { get } from 'env-var'
 
 export const envs = {
+  HOST: get('HOST').required().asString(),
   PORT: get('PORT').required().asInt(),
   POSTGRES_USER: get('POSTGRES_USER').required().asString(),
   POSTGRES_PASSWORD: get('POSTGRES_PASSWORD').required().asString(),
