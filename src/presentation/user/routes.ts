@@ -1,6 +1,6 @@
 import { Router } from 'express'
 import { UserDatasourceImpl, UserRepositoryImpl } from '../../infrastructure'
-import { UserController } from './UserController'
+import { UserController } from './userController'
 // import { AuthController } from './controller'
 
 export class UserRoutes {
