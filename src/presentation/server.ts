@@ -29,12 +29,14 @@ export class Server {
     this.app.use(cors({
       origin: (origin, callback) => {
         if (!origin) {
-          return callback(null, true)
+          callback(null, true)
+          return
         }
         if (k.ACCEPTED_ORIGINS.includes(origin)) {
-          return callback(null, true)
+          callback(null, true)
+          return
         }
-        return callback(new Error('Not allowed by CORS'))
+        callback(new Error('Not allowed by CORS'))
       }
     }))
   }
