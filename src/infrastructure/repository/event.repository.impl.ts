@@ -1,12 +1,12 @@
 import { EventDatasource, EventEntity, EventRepository } from '../../domain'
-import { CreateEventDto } from '../../domain/dtos'
+import { EventDto } from '../../domain/dtos'
 
 export class EventRepositoryImpl implements EventRepository {
   constructor (
     private readonly eventDatasource: EventDatasource
   ) {}
 
-  async create (createEventDto: CreateEventDto): Promise<EventEntity> {
+  async create (createEventDto: EventDto): Promise<EventEntity> {
     return await new Promise((resolve) => {
       resolve(
         this.eventDatasource.create(createEventDto)

@@ -1,10 +1,10 @@
 import { UuidAdapter } from '../../config'
 import { EventModel } from '../../data/postgres'
 import { CustomError, EventDatasource, EventEntity } from '../../domain'
-import { CreateEventDto } from '../../domain/dtos'
+import { EventDto } from '../../domain/dtos'
 
 export class EventDatasourceImpl implements EventDatasource {
-  async create (createEventDto: CreateEventDto): Promise<EventEntity> {
+  async create (createEventDto: EventDto): Promise<EventEntity> {
     const { user_id, event_name, description, type, logo } = createEventDto
 
     try {
@@ -26,9 +26,9 @@ export class EventDatasourceImpl implements EventDatasource {
       if (!eventCreated) {
         throw CustomError.badRequest('Event Not Created')
       }
-
+      console.log({ eventCreated, value: eventCreated[0] })
       return new EventEntity(
-        eventCreated[0].event_id,
+        newEvent.event_id,
         user_id,
         event_name,
         description,
