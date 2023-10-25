@@ -1,4 +1,4 @@
-export class CreateEventDto {
+export class EventDto {
   private constructor (
     public user_id: string,
     public event_name: string,
@@ -7,7 +7,7 @@ export class CreateEventDto {
     public logo: string
   ) {}
 
-  static create (object: Record<string, any | null>): [string?, CreateEventDto?] {
+  static create (object: Record<string, any | null>): [string?, EventDto?] {
     const {
       user_id,
       event_name,
@@ -23,7 +23,7 @@ export class CreateEventDto {
 
     return [
       undefined,
-      new CreateEventDto(
+      new EventDto(
         user_id,
         event_name,
         description,
