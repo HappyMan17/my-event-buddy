@@ -27,7 +27,18 @@ export class EventModel {
           event.has_activity.toString()
         ]
       })
+      return response
+    } catch (error) {
+      return null
+    }
+  }
 
+  static async getEvents (): Promise<any[] | null> {
+    try {
+      const response = await PostgresDb.query({
+        query: 'SELECT * FROM events;',
+        params: []
+      })
       return response
     } catch (error) {
       return null
