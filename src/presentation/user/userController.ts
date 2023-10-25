@@ -1,5 +1,5 @@
 import { Request, Response } from 'express'
-import { CustomError, UserRepository } from '../../domain/'
+import { CustomError, UserRepository } from '../../domain'
 import { UpdateUserDto } from '../../domain/dtos'
 
 export class UserController {
