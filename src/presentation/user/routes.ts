@@ -1,6 +1,7 @@
 import { Router } from 'express'
 import { UserDatasourceImpl, UserRepositoryImpl } from '../../infrastructure'
 import { UserController } from './userController'
+import { upload } from '../../config'
 // import { AuthController } from './controller'
 
 export class UserRoutes {
@@ -15,7 +16,7 @@ export class UserRoutes {
 
     // routes:
     // router.get('/', AuthMiddleware.validateJWT, controller.getUser);
-    router.put('/update', controller.updateUser)
+    router.put('/update', upload.array('files'), controller.updateUser)
 
     // default url
     router.use('/*', (req, res) => {
