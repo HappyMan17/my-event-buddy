@@ -1,5 +1,5 @@
 import { UserEntity } from '../../../domain'
-import { UserToUpdate } from '../../../domain/dtos'
+import { UserToUpdate, UserUpdateProfileImage } from '../../../domain/dtos'
 import { PostgresDb } from '../postgres.database'
 
 interface GetUserByProps {
@@ -66,6 +66,26 @@ export class UserModel {
         params: [
           user.user_name,
           user.nick_name,
+          user.profile_image ?? '',
+          user.user_id
+        ]
+      })
+
+      return response
+    } catch (error) {
+      return null
+    }
+  }
+
+  static async updateUserImageById (user: UserUpdateProfileImage): Promise<any[] | null> {
+    try {
+      const response = await PostgresDb.query({
+        query: `
+          UPDATE users
+          SET profile_image = $1
+          WHERE user_id = $2;
+        `,
+        params: [
           user.profile_image ?? '',
           user.user_id
         ]

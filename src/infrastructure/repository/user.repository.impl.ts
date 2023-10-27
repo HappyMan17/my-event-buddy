@@ -1,5 +1,5 @@
 import { UserDatasource, UserRepository } from '../../domain'
-import { UpdateUserDto, UserToUpdate } from '../../domain/dtos'
+import { UpdateUserDto, UserToUpdate, UserUpdateProfileImage } from '../../domain/dtos'
 
 export class UserRepositoryImpl implements UserRepository {
   constructor (
@@ -10,6 +10,14 @@ export class UserRepositoryImpl implements UserRepository {
     return await new Promise((resolve) => {
       resolve(
         this.userDatasource.update(updateUserDto)
+      )
+    })
+  }
+
+  async updateUserImage (updateUserDto: UpdateUserDto): Promise<UserUpdateProfileImage> {
+    return await new Promise((resolve) => {
+      resolve(
+        this.userDatasource.updateImage(updateUserDto)
       )
     })
   }

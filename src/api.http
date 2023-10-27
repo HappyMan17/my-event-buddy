@@ -33,7 +33,7 @@ PUT http://localhost:3000/api/user/update
 content-type: application/json
 
 {
-    "user_id": "7cd71d3e-08a7-43ce-8ed8-e17a5ed267ed",
+    "user_id": "dd654a34-b34c-4429-8ab5-f1ca401758d8",
     "user_name": "testUserName",
     "nick_name": "testNickName",
     "profile_image": ""

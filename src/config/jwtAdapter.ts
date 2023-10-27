@@ -3,6 +3,10 @@ import { envs } from './envs'
 
 const JWT_SEED = envs.JWT_SEED
 
+export interface PayloadType {
+  id: string
+}
+
 export class JwtAdapter {
   static async generateToken (
     payload: any,
