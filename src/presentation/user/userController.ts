@@ -48,7 +48,7 @@ export class UserController {
     const newFilePath = `./src/uploads/profile_images/userProfileImage_${updateUserDto?.user_id}.jpg`
     await renameFile('./src/uploads/profile_images/userProfileImage.jpg', newFilePath)
 
-    updateUserDto!.profile_image = newFilePath
+    updateUserDto!.profile_image = `userProfileImage_${updateUserDto?.user_id}.jpg`
     // console.log({ dto: updateUserDto!.profile_image })
     this.userRepository.updateUserImage(updateUserDto!)
       .then(async (user) => {
