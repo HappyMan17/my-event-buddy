@@ -1,3 +1,5 @@
+import { UserUpdateProfileImage } from '../types'
+
 export class UpdateUserDto {
   private constructor (
     public user_id: string,
@@ -21,6 +23,20 @@ export class UpdateUserDto {
         nick_name,
         profile_image
       )
+    ]
+  }
+
+  static updateImage (object: Record<string, any | null>): [string?, UserUpdateProfileImage?] {
+    const { userId } = object
+
+    if (!userId) return ['Missing id', undefined]
+
+    return [
+      undefined,
+      {
+        user_id: userId,
+        profile_image: ''
+      }
     ]
   }
 }

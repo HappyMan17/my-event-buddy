@@ -6,6 +6,11 @@ export interface UserFromRegister {
   profile_image?: string,
 }
 
+export interface UserUpdateProfileImage {
+  user_id: string,
+  profile_image?: string,
+}
+
 export type UserFromLogin = UserFromRegister
 
 export type UserToUpdate = Omit<UserFromRegister, 'email'>

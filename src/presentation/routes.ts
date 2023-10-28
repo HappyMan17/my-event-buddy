@@ -1,6 +1,7 @@
 import { Router } from 'express'
 import { AuthRoutes } from './auth/routes'
 import { UserRoutes } from './user/routes'
+import { EventRoutes } from './event/routes'
 // import { AuthMiddleware } from "./middleware/auth.middleware";
 
 export class AppRoutes {
@@ -13,6 +14,9 @@ export class AppRoutes {
 
     // user routes
     router.use('/api/user', UserRoutes.routes)
+
+    // user routes
+    router.use('/api/event', EventRoutes.routes)
 
     router.get('/', (req, res) => {
       res.json({ message: 'main route' })
