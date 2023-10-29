@@ -4,19 +4,18 @@ import { UserToUpdate, UserUpdateProfileImage } from '../../domain/dtos'
 import { UserEntityMapper } from '../mappers'
 
 export class UserDatasourceImpl implements UserDatasource {
-  async getUserById (getUserDto: { user_id: string }): Promise<UserEntity[]> {
+  async getUserById (getUserDto: { user_id: string }): Promise<UserEntity> {
     const { user_id } = getUserDto
     try {
-      const user = await UserModel.getUserBy({ field: 'id', value: user_id })
-      console.log({ user }) // todo remove
+      const user = await UserModel.getUserBy({ field: 'user_id', value: user_id })
 
       if (!user) {
-        throw CustomError.badRequest('User Not Updated')
+        throw CustomError.badRequest('Could not get the user')
       }
 
       const users = user.map(user => UserEntityMapper.userEntityFromObject(user))
 
-      return users
+      return users[0]
     } catch (error) {
       if (error instanceof CustomError) {
         throw error
