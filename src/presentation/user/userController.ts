@@ -38,6 +38,26 @@ export class UserController {
       .catch(error => this.handleError(error, res))
   }
 
+  /**
+   * get user by id
+   * @param req
+   * @param res
+   * @returns http response
+   */
+  getUserById = async (req: Request, res: Response) => {
+    const [error, userByIdDto] = UpdateUserDto.userById(req.body)
+
+    if (error) return res.status(400).json({ error })
+
+    this.userRepository.getUserById(userByIdDto!)
+      .then(async (user) => {
+        res.status(200).json({
+          user
+        })
+      })
+      .catch(error => this.handleError(error, res))
+  }
+
   updateUserProfileImage = async (req: Request, res: Response) => {
     // console.log({ req, body: req.body, ms: 'image' })
 

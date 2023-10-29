@@ -1,6 +1,7 @@
 import { Router } from 'express'
 import { EventDatasourceImpl, EventRepositoryImpl } from '../../infrastructure'
 import { EventController } from './eventController'
+import { AuthMiddleware } from '../midleware'
 // import { AuthController } from './controller'
 
 export class EventRoutes {
@@ -14,7 +15,7 @@ export class EventRoutes {
     const controller = new EventController(UserRepository)
 
     // routes:
-    router.put('/create', controller.createEvent)
+    router.put('/create', AuthMiddleware.validateJWT, controller.createEvent)
     router.get('/all', controller.getEvents)
 
     // default url

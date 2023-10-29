@@ -9,14 +9,15 @@ export class EventDto {
 
   static create (object: Record<string, any | null>): [string?, EventDto?] {
     const {
-      user_id,
       event_name,
       description,
       type,
       logo
     } = object
 
-    if (!user_id) return ['Missing user id', undefined]
+    console.log({ id: object.body.user_id })
+
+    if (!object.body.user_id) return ['Missing user id', undefined]
     if (!event_name) return ['Missing event name', undefined]
     if (!description) return ['Missing event description', undefined]
     if (!type) return ['Missing event type', undefined]
@@ -24,7 +25,7 @@ export class EventDto {
     return [
       undefined,
       new EventDto(
-        user_id,
+        object.body.user_id,
         event_name,
         description,
         type,
