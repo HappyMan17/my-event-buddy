@@ -15,6 +15,10 @@ export class EventRoutes {
     const controller = new EventController(UserRepository)
 
     // routes:
+    // get user event
+    router.get('/', AuthMiddleware.validateJWT, controller.getUserEvents)
+
+    // create user
     router.put('/create', AuthMiddleware.validateJWT, controller.createEvent)
     router.get('/all', controller.getEvents)
 

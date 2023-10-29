@@ -14,10 +14,9 @@ export class EventDto {
       type,
       logo
     } = object
+    console.log({ id: object.body })
 
-    console.log({ id: object.body.user_id })
-
-    if (!object.body.user_id) return ['Missing user id', undefined]
+    if (!object.user_id) return ['Missing user id', undefined]
     if (!event_name) return ['Missing event name', undefined]
     if (!description) return ['Missing event description', undefined]
     if (!type) return ['Missing event type', undefined]
@@ -25,7 +24,7 @@ export class EventDto {
     return [
       undefined,
       new EventDto(
-        object.body.user_id,
+        object.user_id,
         event_name,
         description,
         type,

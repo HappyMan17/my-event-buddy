@@ -50,15 +50,20 @@ GET http://localhost:3000/api/event/all
 ### Create event
 PUT http://localhost:3000/api/event/create
 content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImRkNjU0YTM0LWIzNGMtNDQyOS04YWI1LWYxY2E0MDE3NThkOCIsImlhdCI6MTY5ODYyMTgxMywiZXhwIjoxNjk4NjI5MDEzfQ.UELgJKUJfLtwQJCmSr7CjLT4vWPL_W0Oz4ET_0gKEDU
 
 {
     "event_id": "0ccd38fa-0ea5-4cd4-a876-77b9d6841106",
-    "user_id": "c35b00c4-1b34-4e6c-a9f8-046ec4fbdb4c",
+    "user_id": "dd654a34-b34c-4429-8ab5-f1ca401758d8",
     "event_name": "Cumple Gaby",
     "description": "Vamos a hacer una fiesta",
     "type": "Celebracion",
     "logo": "",
     "has_activity": false
 }
+
+### Events By id
+GET http://localhost:3000/api/event
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImRkNjU0YTM0LWIzNGMtNDQyOS04YWI1LWYxY2E0MDE3NThkOCIsImlhdCI6MTY5ODYyMTgxMywiZXhwIjoxNjk4NjI5MDEzfQ.UELgJKUJfLtwQJCmSr7CjLT4vWPL_W0Oz4ET_0gKEDU
 
 # insert INTO public.users (user_id, user_name, nick_name, password, email, profile_image) values ('0ccd39fa-0ea5-4cd4-a876-77b9d6841106', 'Sebastian', 'happy', '12345', 'email@gmail.com', '');

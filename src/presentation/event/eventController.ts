@@ -34,7 +34,18 @@ export class EventController {
 
   getEvents = async (req: Request, res: Response): Promise<void> => {
     const response = await EventModel.getEvents()
-    if (response) {
+    if (response && response.length > 0) {
+      // mapping
+      const events = response.map(event => EventEntityMapper.eventEntityFromObject(event))
+      res.status(200).json(events)
+    } else {
+      res.status(200).json(response)
+    }
+  }
+
+  getUserEvents = async (req: Request, res: Response): Promise<void> => {
+    const response = await EventModel.getEventsByUserId(req.body.user_id)
+    if (response && response.length > 0) {
       // mapping
       const events = response.map(event => EventEntityMapper.eventEntityFromObject(event))
       res.status(200).json(events)
