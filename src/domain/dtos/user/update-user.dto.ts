@@ -42,7 +42,7 @@ export class UpdateUserDto {
 
   static userById (object: Record<string, any | null>): [string?, { user_id: string }?] {
     const userId = object.user_id
-    console.log({ userId }) // todo remove
+
     if (!userId) return ['Missing id', undefined]
 
     return [

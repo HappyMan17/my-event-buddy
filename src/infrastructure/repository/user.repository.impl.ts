@@ -6,7 +6,7 @@ export class UserRepositoryImpl implements UserRepository {
     private readonly userDatasource: UserDatasource
   ) {}
 
-  async getUserById (getUserDto: { user_id: string }): Promise<UserEntity[]> {
+  async getUserById (getUserDto: { user_id: string }): Promise<UserEntity> {
     return await new Promise((resolve) => {
       resolve(
         this.userDatasource.getUserById(getUserDto)
