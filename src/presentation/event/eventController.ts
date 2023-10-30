@@ -2,7 +2,7 @@ import { Request, Response } from 'express'
 import { CustomError, EventRepository } from '../../domain'
 import { EventDto } from '../../domain/dtos'
 import { EventModel } from '../../data/postgres'
-import { EventEntityMapper } from '../../infrastructure/mappers/event.mapper'
+import { EventEntityMapper } from '../../infrastructure/mappers'
 import { renameFile } from '../../config'
 
 export class EventController {
@@ -51,7 +51,7 @@ export class EventController {
       const events = response.map(event => EventEntityMapper.eventEntityFromObject(event))
       res.status(200).json(events)
     } else {
-      res.status(200).json(response)
+      res.status(400).json({ message: 'error' })
     }
   }
 

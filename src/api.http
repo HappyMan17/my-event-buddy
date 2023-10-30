@@ -48,13 +48,13 @@ content-type: application/json
 GET http://localhost:3000/api/event/all
 
 ### Create event
-PUT http://localhost:3000/api/event/create
+POST http://localhost:3000/api/event/create
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImRkNjU0YTM0LWIzNGMtNDQyOS04YWI1LWYxY2E0MDE3NThkOCIsImlhdCI6MTY5ODYyMTgxMywiZXhwIjoxNjk4NjI5MDEzfQ.UELgJKUJfLtwQJCmSr7CjLT4vWPL_W0Oz4ET_0gKEDU
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImM5Y2NiYjVmLWJkZDQtNGEzNC1iNjI1LWQ2MWFlM2MwY2NhNyIsImlhdCI6MTY5ODY2ODM5MCwiZXhwIjoxNjk4Njc1NTkwfQ.m6inSTYP93KcfABE8LQfQ4mHQfAalIH5JQbIzgnuDb0
 
 {
     "event_id": "0ccd38fa-0ea5-4cd4-a876-77b9d6841106",
-    "user_id": "dd654a34-b34c-4429-8ab5-f1ca401758d8",
+    "user_id": "c9ccbb5f-bdd4-4a34-b625-d61ae3c0cca7",
     "event_name": "Cumple Gaby",
     "description": "Vamos a hacer una fiesta",
     "type": "Celebracion",
@@ -62,8 +62,25 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImRkNjU0YTM0L
     "has_activity": false
 }
 
-### Events By id
-GET http://localhost:3000/api/event
+# Activities -------------------------
+### All
+GET http://localhost:3000/api/activity/all
+
+### Create activity
+PUT http://localhost:3000/api/activity/create
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImM5Y2NiYjVmLWJkZDQtNGEzNC1iNjI1LWQ2MWFlM2MwY2NhNyIsImlhdCI6MTY5ODY2NzM3NSwiZXhwIjoxNjk4Njc0NTc1fQ.g3qO1V2zFk6AVpnHMJpzaNTym_vp-1aWDget_NdLi34
+
+{
+    "event_id": "3d35cb84-a4a5-400a-b027-bad248fdd95e",
+    "description": "Vamos a hacer una fiesta",
+    "total_activity_value": 50000,
+    "is_by_percentage": true
+}
+
+
+### Avtivity By id
+GET http://localhost:3000/api/activity
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImRkNjU0YTM0LWIzNGMtNDQyOS04YWI1LWYxY2E0MDE3NThkOCIsImlhdCI6MTY5ODYyMTgxMywiZXhwIjoxNjk4NjI5MDEzfQ.UELgJKUJfLtwQJCmSr7CjLT4vWPL_W0Oz4ET_0gKEDU
 
 # insert INTO public.users (user_id, user_name, nick_name, password, email, profile_image) values ('0ccd39fa-0ea5-4cd4-a876-77b9d6841106', 'Sebastian', 'happy', '12345', 'email@gmail.com', '');
