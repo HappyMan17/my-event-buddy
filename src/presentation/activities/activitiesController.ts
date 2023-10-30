@@ -24,9 +24,9 @@ export class ActivitiesController {
     if (error) return res.status(400).json({ error })
 
     this.activitieRepository.createAct(createActivitieDto!)
-      .then(async (event) => {
+      .then(async (activity) => {
         res.json({
-          event
+          activity
         })
       })
       .catch(error => this.handleError(error, res))

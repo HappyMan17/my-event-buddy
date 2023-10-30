@@ -17,8 +17,8 @@ export class ActivitiesRoutes {
     // routes:
     // router.put('/update', AuthMiddleware.validateJWT, controller.updateUser)
     // router.put('/upload', multerUpload.manageFile, controller.updateUserProfileImage)
-    router.put('/createActivitie', controller.createActivities)
-    router.get('/allActivitie', controller.getActivities)
+    router.put('/create', AuthMiddleware.validateJWT, controller.createActivities)
+    router.get('/all', controller.getActivities)
 
     // default url
     router.use('/*', (req, res) => {

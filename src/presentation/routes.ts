@@ -19,7 +19,7 @@ export class AppRoutes {
     // user routes
     router.use('/api/event', EventRoutes.routes)
 
-    router.use('/api/activities', ActivitiesRoutes.routes)
+    router.use('/api/activity', ActivitiesRoutes.routes)
 
     router.get('/', (req, res) => {
       res.json({ message: 'main route' })
