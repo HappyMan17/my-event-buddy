@@ -16,7 +16,7 @@ export class UserRoutes {
     const multerUpload = new FileMiddleware('userProfileImage')
 
     // routes:
-    // router.get('/', AuthMiddleware.validateJWT, controller.getUser);
+    router.get('/', AuthMiddleware.validateJWT, controller.getUserById)
     // router.put('/update', multerUpload.manageFile, controller.updateUser)
     // router.put('/update', asyncMiddlewareWrapper(AuthMiddleware.validateJWT), controller.updateUser)
     router.put('/update', AuthMiddleware.validateJWT, controller.updateUser)

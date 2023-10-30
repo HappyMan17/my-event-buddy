@@ -6,6 +6,10 @@ GET https://pokeapi.co/api/v2/pokemon/ditto
 ### Auth
 GET http://localhost:3000/api/auth/all
 
+### User By id
+GET http://localhost:3000/api/user/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImJmNjNkNmVhLTNhNWMtNDUzMC1iZmI1LWYzN2ViMDliYzdjNyIsImlhdCI6MTY5ODU5MTc5NywiZXhwIjoxNjk4NTk4OTk3fQ.hblV54rktcxsFSToJlx4jeJYDyVWUHdwtpuiZRfn7m8
+
 ### register
 POST http://localhost:3000/api/auth/register
 content-type: application/json
@@ -46,6 +50,7 @@ GET http://localhost:3000/api/event/all
 ### Create event
 PUT http://localhost:3000/api/event/create
 content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImRkNjU0YTM0LWIzNGMtNDQyOS04YWI1LWYxY2E0MDE3NThkOCIsImlhdCI6MTY5ODYyMTgxMywiZXhwIjoxNjk4NjI5MDEzfQ.UELgJKUJfLtwQJCmSr7CjLT4vWPL_W0Oz4ET_0gKEDU
 
 {
     "event_id": "0ccd38fa-0ea5-4cd4-a876-77b9d6841106",
@@ -61,7 +66,7 @@ content-type: application/json
 ### All
 GET http://localhost:3000/api/activity/all
 
-### Create event
+### Create activity
 PUT http://localhost:3000/api/activity/create
 content-type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImM5Y2NiYjVmLWJkZDQtNGEzNC1iNjI1LWQ2MWFlM2MwY2NhNyIsImlhdCI6MTY5ODY2NzM3NSwiZXhwIjoxNjk4Njc0NTc1fQ.g3qO1V2zFk6AVpnHMJpzaNTym_vp-1aWDget_NdLi34
@@ -73,5 +78,9 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImM5Y2NiYjVmL
     "is_by_percentage": true
 }
 
+
+### Avtivity By id
+GET http://localhost:3000/api/activity
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImRkNjU0YTM0LWIzNGMtNDQyOS04YWI1LWYxY2E0MDE3NThkOCIsImlhdCI6MTY5ODYyMTgxMywiZXhwIjoxNjk4NjI5MDEzfQ.UELgJKUJfLtwQJCmSr7CjLT4vWPL_W0Oz4ET_0gKEDU
 
 # insert INTO public.users (user_id, user_name, nick_name, password, email, profile_image) values ('0ccd39fa-0ea5-4cd4-a876-77b9d6841106', 'Sebastian', 'happy', '12345', 'email@gmail.com', '');
