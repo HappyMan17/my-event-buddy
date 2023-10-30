@@ -20,10 +20,11 @@ export class ActivitiesRoutes {
     router.get('/', AuthMiddleware.validateJWT, controller.getEventActivities)
 
     // get by id
-    router.get('/:activityId', controller.getActivityById)
+    router.get('/:activityId', AuthMiddleware.validateJWT, controller.getActivityById)
 
     // Update activity
-    // router.put('/update', AuthMiddleware.validateJWT, controller.updateUser)
+    router.put('/update', AuthMiddleware.validateJWT, controller.updateActivity)
+
     router.put('/create', AuthMiddleware.validateJWT, controller.createActivities)
 
     // default url
