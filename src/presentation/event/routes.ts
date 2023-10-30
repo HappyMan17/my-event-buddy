@@ -16,19 +16,18 @@ export class EventRoutes {
     const multerUpload = new FileMiddleware('eventLogo')
 
     // routes:
+    router.get('/all', controller.getEvents)
     // get user event
     router.get('/', AuthMiddleware.validateJWT, controller.getUserEvents)
 
     // get event by id
-    router.get('/:eventId', controller.getEventById)
+    router.get('/:eventId', AuthMiddleware.validateJWT, controller.getEventById)
 
     // create user
     router.post('/create', AuthMiddleware.validateJWT, controller.createEvent)
 
     // upload images
     router.put('/upload', multerUpload.manageFile, controller.updateImage)
-
-    router.get('/all', controller.getEvents)
 
     // default url
     router.use('/*', (req, res) => {
