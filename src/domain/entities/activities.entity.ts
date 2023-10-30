@@ -5,8 +5,6 @@ export class ActivitiesEntity {
     public user_id: string,
     public description: string,
     public total_activity_value: number,
-    public percentage_bool: boolean,
-    public percentage: number,
-    public amount: number
+    public is_by_percentage: boolean
   ) {}
 }

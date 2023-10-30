@@ -49,12 +49,29 @@ content-type: application/json
 
 {
     "event_id": "0ccd38fa-0ea5-4cd4-a876-77b9d6841106",
-    "user_id": "c35b00c4-1b34-4e6c-a9f8-046ec4fbdb4c",
+    "user_id": "c9ccbb5f-bdd4-4a34-b625-d61ae3c0cca7",
     "event_name": "Cumple Gaby",
     "description": "Vamos a hacer una fiesta",
     "type": "Celebracion",
     "logo": "",
     "has_activity": false
 }
+
+# Activities -------------------------
+### All
+GET http://localhost:3000/api/activity/all
+
+### Create event
+PUT http://localhost:3000/api/activity/create
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImM5Y2NiYjVmLWJkZDQtNGEzNC1iNjI1LWQ2MWFlM2MwY2NhNyIsImlhdCI6MTY5ODY2NzM3NSwiZXhwIjoxNjk4Njc0NTc1fQ.g3qO1V2zFk6AVpnHMJpzaNTym_vp-1aWDget_NdLi34
+
+{
+    "event_id": "5f952730-84de-41f2-a083-b5a0096b1726",
+    "description": "Vamos a hacer una fiesta",
+    "total_activity_value": 50000,
+    "is_by_percentage": true
+}
+
 
 # insert INTO public.users (user_id, user_name, nick_name, password, email, profile_image) values ('0ccd39fa-0ea5-4cd4-a876-77b9d6841106', 'Sebastian', 'happy', '12345', 'email@gmail.com', '');

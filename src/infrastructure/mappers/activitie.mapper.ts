@@ -8,10 +8,10 @@ export class ActivitiesEntityMapper {
    */
   static activitiesEntityFromObject (object: Record<string, any>): ActivitiesEntity {
     try {
-      const { activitie_id, event_id, user_id, description, total_activity_value, percentage, amount } = object
+      const { activitie_id, event_id, user_id, description, total_activity_value, is_by_percentage } = object
 
-      if (!description) throw CustomError.badRequest('Missing event id')
-      if (!total_activity_value) throw CustomError.badRequest('Missing user id')
+      if (!description) throw CustomError.badRequest('Missing description')
+      if (!total_activity_value) throw CustomError.badRequest('Missing activity total value')
 
       return new ActivitiesEntity(
         activitie_id,
@@ -19,12 +19,10 @@ export class ActivitiesEntityMapper {
         user_id,
         description,
         total_activity_value,
-        false,
-        percentage,
-        amount
+        is_by_percentage
       )
     } catch (error) {
-      throw CustomError.internalServer('Missing some event fields.')
+      throw CustomError.internalServer('Missing some activity fields.')
     }
   }
 }

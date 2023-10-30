@@ -13,10 +13,8 @@ export class ActivitiesModel {
             user_id,
             description,
             total_activity_value,
-            percentage_bool,
-            percentage,
-            amount
-          ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8);
+            is_by_percentage
+          ) VALUES ($1, $2, $3, $4, $5, $6);
         `,
         params: [
           activitie.activity_id,
@@ -24,9 +22,7 @@ export class ActivitiesModel {
           activitie.user_id,
           activitie.description,
           activitie.total_activity_value.toString(),
-          activitie.percentage_bool.toString(),
-          activitie.percentage.toString(),
-          activitie.amount.toString()
+          activitie.is_by_percentage.toString()
         ]
       })
       return response

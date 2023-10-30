@@ -38,6 +38,7 @@ CREATE TABLE activities (
   user_id UUID NOT NULL, --Creator
   "description" VARCHAR(150) NOT NULL,
   total_activity_value numeric NOT NULL,
+  is_by_percentage BOOLEAN,
   PRIMARY KEY (activity_id),
   FOREIGN KEY (event_id) REFERENCES events (event_id),
   FOREIGN KEY (user_id) REFERENCES users (user_id)
@@ -48,6 +49,8 @@ CREATE TABLE activity_contacts (
   activity_id UUID NOT NULL,
   user_id UUID NOT NULL, -- Activity creator
   debtor_id UUID NOT NULL, -- Debtor
+  "percentage" real NOT NULL,
+  amount real NOT NULL,
   total_to_pay numeric NOT NULL,
   total_paid numeric,
   already_paid BOOLEAN,
