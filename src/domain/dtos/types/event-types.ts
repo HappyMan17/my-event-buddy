@@ -7,3 +7,8 @@ export interface Event {
   logo: string;
   has_activity: boolean;
 }
+
+export interface EventUpdateLogo {
+  event_id: string,
+  logo?: string,
+}

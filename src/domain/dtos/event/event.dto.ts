@@ -1,3 +1,5 @@
+import { type EventUpdateLogo } from '../types'
+
 export class EventDto {
   private constructor (
     public user_id: string,
@@ -9,14 +11,13 @@ export class EventDto {
 
   static create (object: Record<string, any | null>): [string?, EventDto?] {
     const {
-      user_id,
       event_name,
       description,
       type,
       logo
     } = object
 
-    if (!user_id) return ['Missing user id', undefined]
+    if (!object.user_id) return ['Missing user id', undefined]
     if (!event_name) return ['Missing event name', undefined]
     if (!description) return ['Missing event description', undefined]
     if (!type) return ['Missing event type', undefined]
@@ -24,12 +25,26 @@ export class EventDto {
     return [
       undefined,
       new EventDto(
-        user_id,
+        object.user_id,
         event_name,
         description,
         type,
         logo
       )
+    ]
+  }
+
+  static updateImage (object: Record<string, any | null>): [string?, EventUpdateLogo?] {
+    const { eventId } = object
+
+    if (!eventId) return ['Missing id', undefined]
+
+    return [
+      undefined,
+      {
+        event_id: eventId,
+        logo: ''
+      }
     ]
   }
 }

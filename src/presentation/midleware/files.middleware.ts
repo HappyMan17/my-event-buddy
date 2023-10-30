@@ -13,15 +13,12 @@ export class FileMiddleware {
   }
 
   manageFile = (req: Request, res: Response, next: NextFunction) => {
-    console.log({ req })
     try {
       const storage = multer.diskStorage({
         destination: (req, file, cb) => {
           cb(null, this.saveFolder)
         },
         filename: (req, file, cb) => {
-          console.log({ file, name: this.fileName })
-          // cb(null, this.fileName)
           cb(null, `${this.fileName}.jpg`)
         }
       })
