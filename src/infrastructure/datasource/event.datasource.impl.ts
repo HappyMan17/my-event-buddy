@@ -77,7 +77,7 @@ export class EventDatasourceImpl implements EventDatasource {
     try {
       const event = await EventModel.getEventById(eventId)
 
-      if (!event) {
+      if (!event || event.length === 0) {
         throw CustomError.badRequest('Event Not found')
       }
 

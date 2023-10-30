@@ -2,6 +2,7 @@ import { UuidAdapter } from '../../config'
 import { ActivitiesModel } from '../../data/postgres'
 import { CustomError, ActivitiesDatasource, ActivitiesEntity } from '../../domain'
 import { ActivitiesDto } from '../../domain/dtos'
+import { ActivitiesEntityMapper } from '../mappers'
 
 export class ActivitiesDatasourceImpl implements ActivitiesDatasource {
   async createAct (createActivitiesDto: ActivitiesDto): Promise<ActivitiesEntity> {
@@ -28,6 +29,23 @@ export class ActivitiesDatasourceImpl implements ActivitiesDatasource {
       }
 
       return newActivities
+    } catch (error) {
+      if (error instanceof CustomError) {
+        throw error
+      }
+      throw CustomError.internalServer()
+    }
+  }
+
+  async getById (activityId: string) {
+    try {
+      const activity = await ActivitiesModel.getActivitiesById(activityId)
+
+      if (!activity || activity.length === 0) {
+        throw CustomError.badRequest('Activitie Not Found')
+      }
+
+      return ActivitiesEntityMapper.activitiesEntityFromObject(activity[0])
     } catch (error) {
       if (error instanceof CustomError) {
         throw error

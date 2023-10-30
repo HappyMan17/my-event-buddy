@@ -15,12 +15,16 @@ export class ActivitiesRoutes {
     const controller = new ActivitiesController(UserRepository)
 
     // routes:
+    router.get('/all', controller.getActivities)
     // get activities by user
     router.get('/', AuthMiddleware.validateJWT, controller.getEventActivities)
+
+    // get by id
+    router.get('/:activityId', controller.getActivityById)
+
     // Update activity
     // router.put('/update', AuthMiddleware.validateJWT, controller.updateUser)
     router.put('/create', AuthMiddleware.validateJWT, controller.createActivities)
-    router.get('/all', controller.getActivities)
 
     // default url
     router.use('/*', (req, res) => {

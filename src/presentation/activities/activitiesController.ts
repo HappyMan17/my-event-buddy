@@ -32,6 +32,23 @@ export class ActivitiesController {
       .catch(error => this.handleError(error, res))
   }
 
+  getActivityById = async (req: Request, res: Response): Promise<void> => {
+    const activityId = req.params.activityId
+
+    if (!activityId) {
+      res.status(400).json({ ms: 'activity id not provided.' })
+      return
+    }
+
+    this.activitieRepository.getById(activityId)
+      .then(async (activity) => {
+        res.json({
+          activity
+        })
+      })
+      .catch(error => this.handleError(error, res))
+  }
+
   getActivities = async (req: Request, res: Response): Promise<void> => {
     const response = await ActivitiesModel.getActivities()
     if (response) {
