@@ -1,4 +1,5 @@
 import { EventEntity } from '../../../domain'
+import { EventUpdateLogo } from '../../../domain/dtos'
 import { PostgresDb } from '../postgres.database'
 
 export class EventModel {
@@ -51,6 +52,26 @@ export class EventModel {
         query: 'SELECT * FROM events WHERE user_id = $1;',
         params: [userId]
       })
+      return response
+    } catch (error) {
+      return null
+    }
+  }
+
+  static async updateEventLogo (event: EventUpdateLogo): Promise<any[] | null> {
+    try {
+      const response = await PostgresDb.query({
+        query: `
+          UPDATE events
+          SET logo = $1
+          WHERE event_id = $2;
+        `,
+        params: [
+          event.logo ?? '',
+          event.event_id
+        ]
+      })
+
       return response
     } catch (error) {
       return null

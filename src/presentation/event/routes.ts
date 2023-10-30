@@ -1,7 +1,7 @@
 import { Router } from 'express'
 import { EventDatasourceImpl, EventRepositoryImpl } from '../../infrastructure'
 import { EventController } from './eventController'
-import { AuthMiddleware } from '../midleware'
+import { AuthMiddleware, FileMiddleware } from '../midleware'
 // import { AuthController } from './controller'
 
 export class EventRoutes {
@@ -13,13 +13,18 @@ export class EventRoutes {
     const UserRepository = new EventRepositoryImpl(datasource)
 
     const controller = new EventController(UserRepository)
+    const multerUpload = new FileMiddleware('eventLogo')
 
     // routes:
     // get user event
     router.get('/', AuthMiddleware.validateJWT, controller.getUserEvents)
 
     // create user
-    router.put('/create', AuthMiddleware.validateJWT, controller.createEvent)
+    router.post('/create', AuthMiddleware.validateJWT, controller.createEvent)
+
+    // upload images
+    router.put('/upload', multerUpload.manageFile, controller.updateImage)
+
     router.get('/all', controller.getEvents)
 
     // default url

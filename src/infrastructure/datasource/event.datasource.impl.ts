@@ -1,7 +1,7 @@
 import { UuidAdapter } from '../../config'
 import { EventModel } from '../../data/postgres'
 import { CustomError, EventDatasource, EventEntity } from '../../domain'
-import { EventDto } from '../../domain/dtos'
+import { EventDto, EventUpdateLogo } from '../../domain/dtos'
 
 export class EventDatasourceImpl implements EventDatasource {
   async create (createEventDto: EventDto): Promise<EventEntity> {
@@ -26,7 +26,7 @@ export class EventDatasourceImpl implements EventDatasource {
       if (!eventCreated) {
         throw CustomError.badRequest('Event Not Created')
       }
-      console.log({ eventCreated, value: eventCreated[0] })
+
       return new EventEntity(
         newEvent.event_id,
         user_id,
@@ -36,6 +36,32 @@ export class EventDatasourceImpl implements EventDatasource {
         logo,
         false
       )
+    } catch (error) {
+      if (error instanceof CustomError) {
+        throw error
+      }
+      throw CustomError.internalServer()
+    }
+  }
+
+  async updateImage (eventDto: EventUpdateLogo): Promise<EventUpdateLogo> {
+    const { event_id, logo } = eventDto
+    try {
+      const eventLogoAttributes: EventUpdateLogo = {
+        event_id,
+        logo
+      }
+
+      const event = await EventModel.updateEventLogo(eventLogoAttributes)
+
+      if (!event) {
+        throw CustomError.badRequest('Event Not Updated')
+      }
+
+      return {
+        event_id,
+        logo
+      }
     } catch (error) {
       if (error instanceof CustomError) {
         throw error

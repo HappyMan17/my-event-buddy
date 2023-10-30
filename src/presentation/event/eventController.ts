@@ -3,6 +3,7 @@ import { CustomError, EventRepository } from '../../domain'
 import { EventDto } from '../../domain/dtos'
 import { EventModel } from '../../data/postgres'
 import { EventEntityMapper } from '../../infrastructure/mappers/event.mapper'
+import { renameFile } from '../../config'
 
 export class EventController {
   constructor (
@@ -52,5 +53,24 @@ export class EventController {
     } else {
       res.status(200).json(response)
     }
+  }
+
+  updateImage = async (req: Request, res: Response) => {
+    // console.log({ req, body: req.body, ms: 'image' })
+
+    const [error, updateEventDto] = EventDto.updateImage(req.body)
+
+    if (error) return res.status(400).json({ error })
+
+    const newFilePath = `./src/uploads/event_logos/eventLogo_${updateEventDto?.event_id}.jpg`
+    await renameFile('./src/uploads/profile_images/eventLogo.jpg', newFilePath)
+
+    updateEventDto!.logo = `eventLogo__${updateEventDto?.event_id}.jpg`
+    // console.log({ dto: updateUserDto!.profile_image })
+    this.eventRepository.updateImage(updateEventDto!)
+      .then(async (event) => {
+        res.status(200).json(event)
+      })
+      .catch(error => this.handleError(error, res))
   }
 }

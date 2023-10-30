@@ -1,3 +1,5 @@
+import { type EventUpdateLogo } from '../types'
+
 export class EventDto {
   private constructor (
     public user_id: string,
@@ -14,7 +16,6 @@ export class EventDto {
       type,
       logo
     } = object
-    console.log({ id: object.body })
 
     if (!object.user_id) return ['Missing user id', undefined]
     if (!event_name) return ['Missing event name', undefined]
@@ -30,6 +31,20 @@ export class EventDto {
         type,
         logo
       )
+    ]
+  }
+
+  static updateImage (object: Record<string, any | null>): [string?, EventUpdateLogo?] {
+    const { eventId } = object
+
+    if (!eventId) return ['Missing id', undefined]
+
+    return [
+      undefined,
+      {
+        event_id: eventId,
+        logo: ''
+      }
     ]
   }
 }
