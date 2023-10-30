@@ -15,8 +15,9 @@ export class EventModel {
             description,
             type,
             logo,
-            has_activity
-          ) VALUES ($1, $2, $3, $4, $5, $6, $7);
+            has_activity,
+            has_been_done
+          ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8);
         `,
         params: [
           event.event_id,
@@ -25,7 +26,8 @@ export class EventModel {
           event.description,
           event.type,
           event.logo,
-          event.has_activity.toString()
+          event.has_activity.toString(),
+          event.has_been_done.toString()
         ]
       })
       return response

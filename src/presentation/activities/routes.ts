@@ -16,7 +16,7 @@ export class ActivitiesRoutes {
 
     // routes:
     // get activities by user
-    router.get('/', AuthMiddleware.validateJWT, controller.getUserActivities)
+    router.get('/', AuthMiddleware.validateJWT, controller.getEventActivities)
     // Update activity
     // router.put('/update', AuthMiddleware.validateJWT, controller.updateUser)
     router.put('/create', AuthMiddleware.validateJWT, controller.createActivities)

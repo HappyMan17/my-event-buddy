@@ -8,7 +8,7 @@ export class EventEntityMapper {
    */
   static eventEntityFromObject (object: Record<string, any>): EventEntity {
     try {
-      const { event_id, user_id, event_name, description, type, logo, has_activity } = object
+      const { event_id, user_id, event_name, description, type, logo, has_activity, has_been_done } = object
 
       if (!event_id) throw CustomError.badRequest('Missing event id')
       if (!user_id) throw CustomError.badRequest('Missing user id')
@@ -23,7 +23,8 @@ export class EventEntityMapper {
         description,
         type,
         logo,
-        has_activity
+        has_activity,
+        has_been_done
       )
     } catch (error) {
       throw CustomError.internalServer('Missing some event fields.')

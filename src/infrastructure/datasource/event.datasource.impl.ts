@@ -18,6 +18,7 @@ export class EventDatasourceImpl implements EventDatasource {
         description,
         type,
         logo,
+        false,
         false
       )
 
@@ -34,6 +35,7 @@ export class EventDatasourceImpl implements EventDatasource {
         description,
         type,
         logo,
+        false,
         false
       )
     } catch (error) {

@@ -43,10 +43,10 @@ export class ActivitiesController {
     }
   }
 
-  getUserActivities = async (req: Request, res: Response): Promise<void> => {
-    const userId = req.body.user_id
-    if (userId) {
-      this.activitieRepository.getActivitiesByUserId(userId)
+  getEventActivities = async (req: Request, res: Response): Promise<void> => {
+    const eventId = req.body.event_id
+    if (eventId) {
+      this.activitieRepository.getActivitiesByEventId(eventId)
         .then(async (activitiesList) => {
           const activities = activitiesList.map(activitie => ActivitiesEntityMapper.activitiesEntityFromObject(activitie))
           res.json({
@@ -57,5 +57,26 @@ export class ActivitiesController {
     } else {
       res.status(400).json({ ms: 'user id not found.' })
     }
+  }
+
+  /**
+   * Update activity
+   * @param req
+   * @param res
+   * @returns http response
+   */
+  updateActivity = async (req: Request, res: Response) => {
+    // console.log({ req, body: req.body, ms: 'update' })
+    const [error, updateActivityDto] = ActivitiesDto.update(req.body)
+
+    if (error) return res.status(400).json({ error })
+
+    this.activitieRepository.update(updateActivityDto!)
+      .then(async (activity) => {
+        res.status(200).json({
+          activity
+        })
+      })
+      .catch(error => this.handleError(error, res))
   }
 }

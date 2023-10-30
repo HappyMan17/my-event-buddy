@@ -17,7 +17,8 @@ export class ActivitiesDatasourceImpl implements ActivitiesDatasource {
         user_id,
         description,
         total_activity_value,
-        is_by_percentage
+        is_by_percentage,
+        false
       )
 
       const activitieCreated = await ActivitiesModel.createAct(newActivities)
@@ -35,15 +36,52 @@ export class ActivitiesDatasourceImpl implements ActivitiesDatasource {
     }
   }
 
-  async getActivitiesByUserId (userId: string) {
+  async getActivitiesByEventId (userId: string) {
     try {
-      const activities = await ActivitiesModel.getActivitiesByUser(userId)
+      const activities = await ActivitiesModel.getActivitiesByEvent(userId)
 
       if (!activities) {
         throw CustomError.badRequest('Activitie Not Created')
       }
 
       return activities
+    } catch (error) {
+      if (error instanceof CustomError) {
+        throw error
+      }
+      throw CustomError.internalServer()
+    }
+  }
+
+  async update (updateActivityDto: ActivitiesDto): Promise<ActivitiesEntity> {
+    const {
+      activity_id,
+      event_id,
+      user_id,
+      description,
+      total_activity_value,
+      is_by_percentage,
+      has_been_done
+    } = updateActivityDto
+
+    try {
+      const newActivityData = new ActivitiesEntity(
+        activity_id!,
+        event_id,
+        user_id,
+        description,
+        total_activity_value,
+        is_by_percentage,
+        has_been_done!
+      )
+
+      const activity = ActivitiesModel.updateActivity(newActivityData)
+
+      if (!activity) {
+        throw CustomError.badRequest('Activity not Updated')
+      }
+
+      return newActivityData
     } catch (error) {
       if (error instanceof CustomError) {
         throw error

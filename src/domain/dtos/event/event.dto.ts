@@ -6,7 +6,9 @@ export class EventDto {
     public event_name: string,
     public description: string,
     public type: string,
-    public logo: string
+    public logo: string,
+    public hasActivity?: boolean,
+    public hasBeenDone?: boolean
   ) {}
 
   static create (object: Record<string, any | null>): [string?, EventDto?] {
