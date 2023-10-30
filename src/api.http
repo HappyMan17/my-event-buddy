@@ -81,6 +81,6 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImM5Y2NiYjVmL
 
 ### Avtivity By id
 GET http://localhost:3000/api/activity
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImRkNjU0YTM0LWIzNGMtNDQyOS04YWI1LWYxY2E0MDE3NThkOCIsImlhdCI6MTY5ODYyMTgxMywiZXhwIjoxNjk4NjI5MDEzfQ.UELgJKUJfLtwQJCmSr7CjLT4vWPL_W0Oz4ET_0gKEDU
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImM5Y2NiYjVmLWJkZDQtNGEzNC1iNjI1LWQ2MWFlM2MwY2NhNyIsImlhdCI6MTY5ODcwMTMzOCwiZXhwIjoxNjk4NzA4NTM4fQ.X5ZQP0oFi2oRhT3QckLoRWVZu3ZkelBs_Gs9VNG_Cm4
 
 # insert INTO public.users (user_id, user_name, nick_name, password, email, profile_image) values ('0ccd39fa-0ea5-4cd4-a876-77b9d6841106', 'Sebastian', 'happy', '12345', 'email@gmail.com', '');

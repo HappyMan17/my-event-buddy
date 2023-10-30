@@ -42,4 +42,16 @@ export class ActivitiesModel {
       return null
     }
   }
+
+  static async getActivitiesByUser (userId: string): Promise<any[] | null> {
+    try {
+      const response = await PostgresDb.query({
+        query: 'SELECT * FROM activities WHERE user_id = $1;',
+        params: [userId]
+      })
+      return response
+    } catch (error) {
+      return null
+    }
+  }
 }

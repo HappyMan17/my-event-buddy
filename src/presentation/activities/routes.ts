@@ -15,8 +15,10 @@ export class ActivitiesRoutes {
     const controller = new ActivitiesController(UserRepository)
 
     // routes:
+    // get activities by user
+    router.get('/', AuthMiddleware.validateJWT, controller.getUserActivities)
+    // Update activity
     // router.put('/update', AuthMiddleware.validateJWT, controller.updateUser)
-    // router.put('/upload', multerUpload.manageFile, controller.updateUserProfileImage)
     router.put('/create', AuthMiddleware.validateJWT, controller.createActivities)
     router.get('/all', controller.getActivities)
 

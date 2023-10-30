@@ -42,4 +42,20 @@ export class ActivitiesController {
       res.status(400).json({ message: 'error' })
     }
   }
+
+  getUserActivities = async (req: Request, res: Response): Promise<void> => {
+    const userId = req.body.user_id
+    if (userId) {
+      this.activitieRepository.getActivitiesByUserId(userId)
+        .then(async (activitiesList) => {
+          const activities = activitiesList.map(activitie => ActivitiesEntityMapper.activitiesEntityFromObject(activitie))
+          res.json({
+            activities
+          })
+        })
+        .catch(error => this.handleError(error, res))
+    } else {
+      res.status(400).json({ ms: 'user id not found.' })
+    }
+  }
 }

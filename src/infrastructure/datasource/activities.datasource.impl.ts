@@ -34,4 +34,21 @@ export class ActivitiesDatasourceImpl implements ActivitiesDatasource {
       throw CustomError.internalServer()
     }
   }
+
+  async getActivitiesByUserId (userId: string) {
+    try {
+      const activities = await ActivitiesModel.getActivitiesByUser(userId)
+
+      if (!activities) {
+        throw CustomError.badRequest('Activitie Not Created')
+      }
+
+      return activities
+    } catch (error) {
+      if (error instanceof CustomError) {
+        throw error
+      }
+      throw CustomError.internalServer()
+    }
+  }
 }

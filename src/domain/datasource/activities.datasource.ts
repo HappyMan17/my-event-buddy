@@ -3,4 +3,5 @@ import { ActivitiesEntity } from '../entities/activities.entity'
 
 export abstract class ActivitiesDatasource {
   abstract createAct (createActivitiesDto: ActivitiesDto): Promise<ActivitiesEntity>
+  abstract getActivitiesByUserId (userId: string): Promise<ActivitiesEntity[]>
 }

@@ -13,4 +13,12 @@ export class ActivitiesRepositoryImpl implements ActivitiesRepository {
       )
     })
   }
+
+  async getActivitiesByUserId (userId: string): Promise<ActivitiesEntity[]> {
+    return await new Promise((resolve) => {
+      resolve(
+        this.activitiesDatasource.getActivitiesByUserId(userId)
+      )
+    })
+  }
 }
