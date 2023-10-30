@@ -21,4 +21,12 @@ export class EventRepositoryImpl implements EventRepository {
       )
     })
   }
+
+  async getEvent (eventId: string): Promise<EventEntity> {
+    return await new Promise((resolve) => {
+      resolve(
+        this.eventDatasource.getEvent(eventId)
+      )
+    })
+  }
 }

@@ -44,6 +44,23 @@ export class EventController {
     }
   }
 
+  getEventById = async (req: Request, res: Response): Promise<void> => {
+    const eventId = req.params.eventId
+
+    if (!eventId) {
+      res.status(400).json({ ms: 'event id not provided.' })
+      return
+    }
+
+    this.eventRepository.getEvent(eventId)
+      .then(async (event) => {
+        res.json({
+          event
+        })
+      })
+      .catch(error => this.handleError(error, res))
+  }
+
   getUserEvents = async (req: Request, res: Response): Promise<void> => {
     const response = await EventModel.getEventsByUserId(req.body.user_id)
     if (response && response.length > 0) {

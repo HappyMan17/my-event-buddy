@@ -2,6 +2,7 @@ import { UuidAdapter } from '../../config'
 import { EventModel } from '../../data/postgres'
 import { CustomError, EventDatasource, EventEntity } from '../../domain'
 import { EventDto, EventUpdateLogo } from '../../domain/dtos'
+import { EventEntityMapper } from '../mappers'
 
 export class EventDatasourceImpl implements EventDatasource {
   async create (createEventDto: EventDto): Promise<EventEntity> {
@@ -64,6 +65,23 @@ export class EventDatasourceImpl implements EventDatasource {
         event_id,
         logo
       }
+    } catch (error) {
+      if (error instanceof CustomError) {
+        throw error
+      }
+      throw CustomError.internalServer()
+    }
+  }
+
+  async getEvent (eventId: string): Promise<EventEntity> {
+    try {
+      const event = await EventModel.getEventById(eventId)
+
+      if (!event) {
+        throw CustomError.badRequest('Event Not found')
+      }
+
+      return EventEntityMapper.eventEntityFromObject(event[0])
     } catch (error) {
       if (error instanceof CustomError) {
         throw error

@@ -60,6 +60,18 @@ export class EventModel {
     }
   }
 
+  static async getEventById (eventId: string): Promise<any[] | null> {
+    try {
+      const response = await PostgresDb.query({
+        query: 'SELECT * FROM events WHERE event_id = $1;',
+        params: [eventId]
+      })
+      return response
+    } catch (error) {
+      return null
+    }
+  }
+
   static async updateEventLogo (event: EventUpdateLogo): Promise<any[] | null> {
     try {
       const response = await PostgresDb.query({

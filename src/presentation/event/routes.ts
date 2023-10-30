@@ -19,6 +19,9 @@ export class EventRoutes {
     // get user event
     router.get('/', AuthMiddleware.validateJWT, controller.getUserEvents)
 
+    // get event by id
+    router.get('/:eventId', controller.getEventById)
+
     // create user
     router.post('/create', AuthMiddleware.validateJWT, controller.createEvent)
 

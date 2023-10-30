@@ -47,6 +47,9 @@ content-type: application/json
 ### All
 GET http://localhost:3000/api/event/all
 
+### By id
+GET http://localhost:3000/api/event/323c344c-6a3a-4e1b-af51-3228c946d893
+
 ### Create event
 POST http://localhost:3000/api/event/create
 content-type: application/json
