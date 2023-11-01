@@ -32,18 +32,18 @@ export class ActivitiesController {
       .catch(error => this.handleError(error, res))
   }
 
-  getActivityById = async (req: Request, res: Response): Promise<void> => {
-    const activityId = req.params.activityId
+  getActivitiesByEventId = async (req: Request, res: Response): Promise<void> => {
+    const eventId = req.params.eventId
 
-    if (!activityId) {
-      res.status(400).json({ ms: 'activity id not provided.' })
+    if (!eventId) {
+      res.status(400).json({ ms: 'event id not provided.' })
       return
     }
 
-    this.activitieRepository.getById(activityId)
-      .then(async (activity) => {
+    this.activitieRepository.getById(eventId)
+      .then(async (activities) => {
         res.json({
-          activity
+          activities
         })
       })
       .catch(error => this.handleError(error, res))

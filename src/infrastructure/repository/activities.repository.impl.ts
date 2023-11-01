@@ -30,10 +30,10 @@ export class ActivitiesRepositoryImpl implements ActivitiesRepository {
     })
   }
 
-  async getById (activityId: string): Promise<ActivitiesEntity> {
+  async getById (eventId: string): Promise<ActivitiesEntity[]> {
     return await new Promise((resolve) => {
       resolve(
-        this.activitiesDatasource.getById(activityId)
+        this.activitiesDatasource.getById(eventId)
       )
     })
   }

@@ -10,9 +10,9 @@ export class ActivitiesRoutes {
 
     // data source with postgres:
     const datasource = new ActivitiesDatasourceImpl()
-    const UserRepository = new ActivitiesRepositoryImpl(datasource)
+    const activityRepository = new ActivitiesRepositoryImpl(datasource)
 
-    const controller = new ActivitiesController(UserRepository)
+    const controller = new ActivitiesController(activityRepository)
 
     // routes:
     router.get('/all', controller.getActivities)
@@ -20,7 +20,7 @@ export class ActivitiesRoutes {
     router.get('/', AuthMiddleware.validateJWT, controller.getEventActivities)
 
     // get by id
-    router.get('/:activityId', AuthMiddleware.validateJWT, controller.getActivityById)
+    router.get('/:eventId', AuthMiddleware.validateJWT, controller.getActivitiesByEventId)
 
     // Update activity
     router.put('/update', AuthMiddleware.validateJWT, controller.updateActivity)

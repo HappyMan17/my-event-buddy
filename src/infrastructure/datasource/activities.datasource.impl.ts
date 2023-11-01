@@ -37,15 +37,15 @@ export class ActivitiesDatasourceImpl implements ActivitiesDatasource {
     }
   }
 
-  async getById (activityId: string) {
+  async getById (eventId: string) {
     try {
-      const activity = await ActivitiesModel.getActivitiesById(activityId)
+      const activities = await ActivitiesModel.getActivitiesById(eventId)
 
-      if (!activity || activity.length === 0) {
+      if (!activities || activities.length === 0) {
         throw CustomError.badRequest('Activitie Not Found')
       }
 
-      return ActivitiesEntityMapper.activitiesEntityFromObject(activity[0])
+      return activities.map(activity => ActivitiesEntityMapper.activitiesEntityFromObject(activity))
     } catch (error) {
       if (error instanceof CustomError) {
         throw error

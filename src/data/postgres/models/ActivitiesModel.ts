@@ -45,11 +45,11 @@ export class ActivitiesModel {
     }
   }
 
-  static async getActivitiesById (activityId: string): Promise<any[] | null> {
+  static async getActivitiesById (eventId: string): Promise<any[] | null> {
     try {
       const response = await PostgresDb.query({
-        query: 'SELECT * FROM activities WHERE activity_id = $1;',
-        params: [activityId]
+        query: 'SELECT * FROM activities WHERE event_id = $1;',
+        params: [eventId]
       })
       return response
     } catch (error) {
