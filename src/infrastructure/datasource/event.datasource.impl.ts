@@ -1,7 +1,8 @@
 import { UuidAdapter } from '../../config'
 import { EventModel } from '../../data/postgres'
 import { CustomError, EventDatasource, EventEntity } from '../../domain'
-import { EventDto, EventUpdateLogo } from '../../domain/dtos'
+import { EventDto, EventToUpdate, EventUpdateLogo } from '../../domain/dtos'
+import { EventEntityMapper } from '../mappers'
 
 export class EventDatasourceImpl implements EventDatasource {
   async create (createEventDto: EventDto): Promise<EventEntity> {
@@ -18,6 +19,7 @@ export class EventDatasourceImpl implements EventDatasource {
         description,
         type,
         logo,
+        false,
         false
       )
 
@@ -34,6 +36,7 @@ export class EventDatasourceImpl implements EventDatasource {
         description,
         type,
         logo,
+        false,
         false
       )
     } catch (error) {
@@ -62,6 +65,54 @@ export class EventDatasourceImpl implements EventDatasource {
         event_id,
         logo
       }
+    } catch (error) {
+      if (error instanceof CustomError) {
+        throw error
+      }
+      throw CustomError.internalServer()
+    }
+  }
+
+  async getEvent (eventId: string): Promise<EventEntity> {
+    try {
+      const event = await EventModel.getEventById(eventId)
+
+      if (!event || event.length === 0) {
+        throw CustomError.badRequest('Event Not found')
+      }
+
+      return EventEntityMapper.eventEntityFromObject(event[0])
+    } catch (error) {
+      if (error instanceof CustomError) {
+        throw error
+      }
+      throw CustomError.internalServer()
+    }
+  }
+
+  async updateEvent (eventToUpdate: EventToUpdate): Promise<EventToUpdate> {
+    const { event_id, event_name, description, type, has_activity, has_been_done } = eventToUpdate
+
+    try {
+      // 1. Se pueden crear eventos con el mismo nombre?
+
+      // 2. Event.
+      const newEvent = {
+        event_id,
+        event_name,
+        description,
+        type,
+        has_activity,
+        has_been_done
+      }
+
+      const eventCreated = await EventModel.update(newEvent)
+
+      if (!eventCreated) {
+        throw CustomError.badRequest('Event Not Created')
+      }
+
+      return newEvent
     } catch (error) {
       if (error instanceof CustomError) {
         throw error

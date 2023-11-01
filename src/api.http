@@ -15,12 +15,12 @@ POST http://localhost:3000/api/auth/register
 content-type: application/json
 
 {
-    "user_id": "0ccd38fa-0ea5-4cd4-a876-77b9d6841106",
-    "user_name": "Sebastian tres",
-    "nick_name": "happy man 17",
-    "password": "12345678",
-    "email": "email-quince@gmail.com",
-    "profile_image": ""
+  "user_id": "0ccd38fa-0ea5-4cd4-a876-77b9d6841106",
+  "user_name": "Sebastian tres",
+  "nick_name": "happy man 17",
+  "password": "12345678",
+  "email": "email-quince@gmail.com",
+  "profile_image": ""
 }
 
 ### login
@@ -28,8 +28,8 @@ POST http://localhost:3000/api/auth/login
 content-type: application/json
 
 {
-    "email": "email-quince@gmail.com",
-    "password": "12345678"
+  "email": "email-quince@gmail.com",
+  "password": "12345678"
 }
 
 ### Update
@@ -37,50 +37,78 @@ PUT http://localhost:3000/api/user/update
 content-type: application/json
 
 {
-    "user_id": "dd654a34-b34c-4429-8ab5-f1ca401758d8",
-    "user_name": "testUserName",
-    "nick_name": "testNickName",
-    "profile_image": ""
+  "user_id": "dd654a34-b34c-4429-8ab5-f1ca401758d8",
+  "user_name": "testUserName",
+  "nick_name": "testNickName",
+  "profile_image": ""
 }
 
 # Event -------------------------
 ### All
 GET http://localhost:3000/api/event/all
 
+### By id
+GET http://localhost:3000/api/event/323c344c-6a3a-4e1b-af51-3228c946d893
+
 ### Create event
 POST http://localhost:3000/api/event/create
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImM5Y2NiYjVmLWJkZDQtNGEzNC1iNjI1LWQ2MWFlM2MwY2NhNyIsImlhdCI6MTY5ODY2ODM5MCwiZXhwIjoxNjk4Njc1NTkwfQ.m6inSTYP93KcfABE8LQfQ4mHQfAalIH5JQbIzgnuDb0
 
 {
-    "event_id": "0ccd38fa-0ea5-4cd4-a876-77b9d6841106",
-    "user_id": "c9ccbb5f-bdd4-4a34-b625-d61ae3c0cca7",
-    "event_name": "Cumple Gaby",
-    "description": "Vamos a hacer una fiesta",
-    "type": "Celebracion",
-    "logo": "",
-    "has_activity": false
+  "event_id": "0ccd38fa-0ea5-4cd4-a876-77b9d6841106",
+  "user_id": "1f9f2236-bd07-4940-bc6f-367273b1d317",
+  "event_name": "Cumple Gaby",
+  "description": "Vamos a ir a acampar",
+  "type": "Celebracion",
+  "logo": "",
+  "has_activity": false
+}
+
+### Update event
+PUT  http://localhost:3000/api/event/update
+content-type: application/json
+
+{
+  "event_id": "323c344c-6a3a-4e1b-af51-3228c946d893",
+  "event_name": "Cumple Gaby",
+  "description": "Vamos a ir a acampar",
+  "type": "Celebracion",
+  "has_activity": false,
+  "has_been_done": true
 }
 
 # Activities -------------------------
 ### All
 GET http://localhost:3000/api/activity/all
 
+### by id
+GET http://localhost:3000/api/activity/323c344c-6a3a-4e1b-af51-3228c946d893
+
 ### Create activity
-PUT http://localhost:3000/api/activity/create
+POST  http://localhost:3000/api/activity/create
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImM5Y2NiYjVmLWJkZDQtNGEzNC1iNjI1LWQ2MWFlM2MwY2NhNyIsImlhdCI6MTY5ODY2NzM3NSwiZXhwIjoxNjk4Njc0NTc1fQ.g3qO1V2zFk6AVpnHMJpzaNTym_vp-1aWDget_NdLi34
 
 {
-    "event_id": "3d35cb84-a4a5-400a-b027-bad248fdd95e",
-    "description": "Vamos a hacer una fiesta",
-    "total_activity_value": 50000,
-    "is_by_percentage": true
+  "event_id": "323c344c-6a3a-4e1b-af51-3228c946d893",
+  "description": "Vamos a hacer una fiesta",
+  "total_activity_value": 50000,
+  "is_by_percentage": true
+}
+
+### Update activity
+PUT  http://localhost:3000/api/activity/update
+content-type: application/json
+
+{
+  "activity_id": "150055d3-997d-4d53-97be-5e5eba840e7f",
+  "description": "Vamos a hacer una fiesta",
+  "total_activity_value": 50000,
+  "is_by_percentage": true,
+  "has_been_done": true
 }
 
 
-### Avtivity By id
+### Avtivity By event id
 GET http://localhost:3000/api/activity
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImRkNjU0YTM0LWIzNGMtNDQyOS04YWI1LWYxY2E0MDE3NThkOCIsImlhdCI6MTY5ODYyMTgxMywiZXhwIjoxNjk4NjI5MDEzfQ.UELgJKUJfLtwQJCmSr7CjLT4vWPL_W0Oz4ET_0gKEDU
 
 # insert INTO public.users (user_id, user_name, nick_name, password, email, profile_image) values ('0ccd39fa-0ea5-4cd4-a876-77b9d6841106', 'Sebastian', 'happy', '12345', 'email@gmail.com', '');

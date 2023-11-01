@@ -17,6 +17,7 @@ CREATE TABLE events (
   "type" VARCHAR(150) NOT NULL,
   logo TEXT NOT NULL,
   has_activity BOOLEAN,
+  has_been_done BOOLEAN,
   PRIMARY KEY (event_id),
   FOREIGN KEY (user_id) REFERENCES users (user_id)
 );
@@ -39,6 +40,7 @@ CREATE TABLE activities (
   "description" VARCHAR(150) NOT NULL,
   total_activity_value numeric NOT NULL,
   is_by_percentage BOOLEAN,
+  has_been_done BOOLEAN,
   PRIMARY KEY (activity_id),
   FOREIGN KEY (event_id) REFERENCES events (event_id),
   FOREIGN KEY (user_id) REFERENCES users (user_id)

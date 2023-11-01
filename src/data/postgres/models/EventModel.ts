@@ -1,5 +1,5 @@
 import { EventEntity } from '../../../domain'
-import { EventUpdateLogo } from '../../../domain/dtos'
+import { EventToUpdate, EventUpdateLogo } from '../../../domain/dtos'
 import { PostgresDb } from '../postgres.database'
 
 export class EventModel {
@@ -15,8 +15,9 @@ export class EventModel {
             description,
             type,
             logo,
-            has_activity
-          ) VALUES ($1, $2, $3, $4, $5, $6, $7);
+            has_activity,
+            has_been_done
+          ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8);
         `,
         params: [
           event.event_id,
@@ -25,7 +26,8 @@ export class EventModel {
           event.description,
           event.type,
           event.logo,
-          event.has_activity.toString()
+          event.has_activity.toString(),
+          event.has_been_done.toString()
         ]
       })
       return response
@@ -58,6 +60,18 @@ export class EventModel {
     }
   }
 
+  static async getEventById (eventId: string): Promise<any[] | null> {
+    try {
+      const response = await PostgresDb.query({
+        query: 'SELECT * FROM events WHERE event_id = $1;',
+        params: [eventId]
+      })
+      return response
+    } catch (error) {
+      return null
+    }
+  }
+
   static async updateEventLogo (event: EventUpdateLogo): Promise<any[] | null> {
     try {
       const response = await PostgresDb.query({
@@ -72,6 +86,35 @@ export class EventModel {
         ]
       })
 
+      return response
+    } catch (error) {
+      return null
+    }
+  }
+
+  static async update (event: EventToUpdate): Promise<any[] | null> {
+    try {
+      const response = await PostgresDb.query({
+        query: `
+          UPDATE events 
+          SET (
+            event_name,
+            description,
+            type,
+            has_activity,
+            has_been_done
+          ) = ($1, $2, $3, $4, $5)
+          WHERE event_id = $6;
+        `,
+        params: [
+          event.event_name,
+          event.description,
+          event.type,
+          event.has_activity.toString(),
+          event.has_been_done.toString(),
+          event.event_id
+        ]
+      })
       return response
     } catch (error) {
       return null

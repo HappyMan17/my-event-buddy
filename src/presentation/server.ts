@@ -26,7 +26,7 @@ export class Server {
   private setupMiddlewares () {
     this.app.use(express.json())
     this.app.use(express.urlencoded({ extended: true }))
-    this.app.use('/profile_images', express.static('./src/uploads'))
+    this.app.use('/images', express.static('./src/uploads'))
     this.app.use(cors({
       origin: (origin, callback) => {
         if (!origin) {

@@ -6,6 +6,7 @@ export class EventEntity {
     public description: string,
     public type: string,
     public logo: string,
-    public has_activity: boolean
+    public has_activity: boolean,
+    public has_been_done: boolean
   ) {}
 }

@@ -10,15 +10,23 @@ export class ActivitiesRoutes {
 
     // data source with postgres:
     const datasource = new ActivitiesDatasourceImpl()
-    const UserRepository = new ActivitiesRepositoryImpl(datasource)
+    const activityRepository = new ActivitiesRepositoryImpl(datasource)
 
-    const controller = new ActivitiesController(UserRepository)
+    const controller = new ActivitiesController(activityRepository)
+
+    // get activities by user
+    router.get('/', AuthMiddleware.validateJWT, controller.getEventActivities)
 
     // routes:
-    // router.put('/update', AuthMiddleware.validateJWT, controller.updateUser)
-    // router.put('/upload', multerUpload.manageFile, controller.updateUserProfileImage)
-    router.put('/create', AuthMiddleware.validateJWT, controller.createActivities)
     router.get('/all', controller.getActivities)
+
+    // Update activity
+    router.put('/update', AuthMiddleware.validateJWT, controller.updateActivity)
+
+    router.post('/create', AuthMiddleware.validateJWT, controller.createActivities)
+
+    // get by id
+    router.get('/:eventId', AuthMiddleware.validateJWT, controller.getActivitiesByEventId)
 
     // default url
     router.use('/*', (req, res) => {
