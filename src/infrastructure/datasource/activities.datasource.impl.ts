@@ -1,7 +1,7 @@
 import { UuidAdapter } from '../../config'
 import { ActivitiesModel } from '../../data/postgres'
 import { CustomError, ActivitiesDatasource, ActivitiesEntity } from '../../domain'
-import { ActivitiesDto } from '../../domain/dtos'
+import { ActivitiesDto, ActivityToUpdate } from '../../domain/dtos'
 import { ActivitiesEntityMapper } from '../mappers'
 
 export class ActivitiesDatasourceImpl implements ActivitiesDatasource {
@@ -71,11 +71,9 @@ export class ActivitiesDatasourceImpl implements ActivitiesDatasource {
     }
   }
 
-  async update (updateActivityDto: ActivitiesDto): Promise<ActivitiesEntity> {
+  async update (updateActivityDto: ActivityToUpdate): Promise<ActivityToUpdate> {
     const {
       activity_id,
-      event_id,
-      user_id,
       description,
       total_activity_value,
       is_by_percentage,
@@ -83,15 +81,13 @@ export class ActivitiesDatasourceImpl implements ActivitiesDatasource {
     } = updateActivityDto
 
     try {
-      const newActivityData = new ActivitiesEntity(
-        activity_id!,
-        event_id,
-        user_id,
+      const newActivityData: ActivityToUpdate = {
+        activity_id,
         description,
         total_activity_value,
         is_by_percentage,
-        has_been_done!
-      )
+        has_been_done
+      }
 
       const activity = ActivitiesModel.updateActivity(newActivityData)
 

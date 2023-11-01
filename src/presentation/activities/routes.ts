@@ -14,18 +14,19 @@ export class ActivitiesRoutes {
 
     const controller = new ActivitiesController(activityRepository)
 
-    // routes:
-    router.get('/all', controller.getActivities)
     // get activities by user
     router.get('/', AuthMiddleware.validateJWT, controller.getEventActivities)
 
-    // get by id
-    router.get('/:eventId', AuthMiddleware.validateJWT, controller.getActivitiesByEventId)
+    // routes:
+    router.get('/all', controller.getActivities)
 
     // Update activity
     router.put('/update', AuthMiddleware.validateJWT, controller.updateActivity)
 
-    router.put('/create', AuthMiddleware.validateJWT, controller.createActivities)
+    router.post('/create', AuthMiddleware.validateJWT, controller.createActivities)
+
+    // get by id
+    router.get('/:eventId', AuthMiddleware.validateJWT, controller.getActivitiesByEventId)
 
     // default url
     router.use('/*', (req, res) => {

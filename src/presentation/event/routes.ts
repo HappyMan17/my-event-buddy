@@ -10,24 +10,28 @@ export class EventRoutes {
 
     // data source with postgres:
     const datasource = new EventDatasourceImpl()
-    const UserRepository = new EventRepositoryImpl(datasource)
+    const EventRepository = new EventRepositoryImpl(datasource)
 
-    const controller = new EventController(UserRepository)
+    const controller = new EventController(EventRepository)
     const multerUpload = new FileMiddleware('eventLogo')
 
-    // routes:
-    router.get('/all', controller.getEvents)
     // get user event
     router.get('/', AuthMiddleware.validateJWT, controller.getUserEvents)
 
-    // get event by id
-    router.get('/:eventId', AuthMiddleware.validateJWT, controller.getEventById)
+    // routes:
+    router.get('/all', controller.getEvents)
 
     // create user
     router.post('/create', AuthMiddleware.validateJWT, controller.createEvent)
 
+    // update event
+    router.put('/update', AuthMiddleware.validateJWT, controller.updateEvent)
+
     // upload images
     router.put('/upload', multerUpload.manageFile, controller.updateImage)
+
+    // get event by id
+    router.get('/:eventId', AuthMiddleware.validateJWT, controller.getEventById)
 
     // default url
     router.use('/*', (req, res) => {

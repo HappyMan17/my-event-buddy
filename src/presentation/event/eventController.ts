@@ -33,6 +33,20 @@ export class EventController {
       .catch(error => this.handleError(error, res))
   }
 
+  updateEvent = async (req: Request, res: Response) => {
+    const [error, eventToUpdate] = EventDto.update(req.body)
+
+    if (error) return res.status(400).json({ error })
+
+    this.eventRepository.updateEvent(eventToUpdate!)
+      .then(async (event) => {
+        res.json({
+          event
+        })
+      })
+      .catch(error => this.handleError(error, res))
+  }
+
   getEvents = async (req: Request, res: Response): Promise<void> => {
     const response = await EventModel.getEvents()
     if (response && response.length > 0) {

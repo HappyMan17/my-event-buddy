@@ -1,5 +1,5 @@
 import { ActivitiesDatasource, ActivitiesEntity, ActivitiesRepository } from '../../domain'
-import { ActivitiesDto } from '../../domain/dtos'
+import { ActivitiesDto, ActivityToUpdate } from '../../domain/dtos'
 
 export class ActivitiesRepositoryImpl implements ActivitiesRepository {
   constructor (
@@ -22,7 +22,7 @@ export class ActivitiesRepositoryImpl implements ActivitiesRepository {
     })
   }
 
-  async update (activity: ActivitiesDto): Promise<ActivitiesEntity> {
+  async update (activity: ActivityToUpdate): Promise<ActivityToUpdate> {
     return await new Promise((resolve) => {
       resolve(
         this.activitiesDatasource.update(activity)

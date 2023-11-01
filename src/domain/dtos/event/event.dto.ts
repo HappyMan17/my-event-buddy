@@ -1,4 +1,4 @@
-import { type EventUpdateLogo } from '../types'
+import { EventToUpdate, type EventUpdateLogo } from '../types'
 
 export class EventDto {
   private constructor (
@@ -33,6 +33,36 @@ export class EventDto {
         type,
         logo
       )
+    ]
+  }
+
+  static update (object: Record<string, any | null>): [string?, EventToUpdate?] {
+    const {
+      event_id,
+      event_name,
+      description,
+      type,
+      has_activity,
+      has_been_done
+    } = object
+
+    if (!event_id) return ['Missing event id', undefined]
+    if (!event_name) return ['Missing event name', undefined]
+    if (!description) return ['Missing event description', undefined]
+    if (!type) return ['Missing event type', undefined]
+    if (typeof has_activity !== 'boolean') return ['Missing activity type', undefined]
+    if (typeof has_been_done !== 'boolean') return ['Missing done type', undefined]
+
+    return [
+      undefined,
+      {
+        event_id,
+        event_name,
+        description,
+        type,
+        has_activity,
+        has_been_done
+      }
     ]
   }
 

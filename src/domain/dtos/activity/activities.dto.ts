@@ -1,3 +1,5 @@
+import { ActivityToUpdate } from '../types'
+
 export class ActivitiesDto {
   private constructor (
     public event_id: string,
@@ -34,10 +36,9 @@ export class ActivitiesDto {
     ]
   }
 
-  static update (object: Record<string, any | null>): [string?, ActivitiesDto?] {
+  static update (object: Record<string, any | null>): [string?, ActivityToUpdate?] {
     const {
       activity_id,
-      event_id,
       description,
       total_activity_value,
       is_by_percentage,
@@ -45,23 +46,20 @@ export class ActivitiesDto {
     } = object
 
     if (!activity_id) return ['Missing activity id', undefined]
-    if (!object.user_id) return ['Missing user id', undefined]
     if (!total_activity_value) return ['Missing value', undefined]
     if (!description) return ['Missing event description', undefined]
-    if (!is_by_percentage) return ['Missing is_by_percentage', undefined]
-    if (!has_been_done) return ['Missing has_been_done', undefined]
+    if (typeof is_by_percentage !== 'boolean') return ['Missing is_by_percentage', undefined]
+    if (typeof has_been_done !== 'boolean') return ['Missing has_been_done', undefined]
 
     return [
       undefined,
-      new ActivitiesDto(
-        event_id,
-        object.user_id,
+      {
         description,
         total_activity_value,
         is_by_percentage,
         activity_id,
         has_been_done
-      )
+      }
     ]
   }
 }

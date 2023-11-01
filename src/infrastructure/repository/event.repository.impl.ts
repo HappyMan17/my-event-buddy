@@ -1,5 +1,5 @@
 import { EventDatasource, EventEntity, EventRepository } from '../../domain'
-import { EventDto, EventUpdateLogo } from '../../domain/dtos'
+import { EventDto, EventToUpdate, EventUpdateLogo } from '../../domain/dtos'
 
 export class EventRepositoryImpl implements EventRepository {
   constructor (
@@ -26,6 +26,14 @@ export class EventRepositoryImpl implements EventRepository {
     return await new Promise((resolve) => {
       resolve(
         this.eventDatasource.getEvent(eventId)
+      )
+    })
+  }
+
+  async updateEvent (eventToUpdate: EventToUpdate): Promise<EventToUpdate> {
+    return await new Promise((resolve) => {
+      resolve(
+        this.eventDatasource.updateEvent(eventToUpdate)
       )
     })
   }

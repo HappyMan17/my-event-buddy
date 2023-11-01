@@ -1,4 +1,5 @@
 import { ActivitiesEntity } from '../../../domain'
+import { ActivityToUpdate } from '../../../domain/dtos'
 import { PostgresDb } from '../postgres.database'
 
 export class ActivitiesModel {
@@ -69,7 +70,7 @@ export class ActivitiesModel {
     }
   }
 
-  static async updateActivity (activity: ActivitiesEntity): Promise<any[] | null> {
+  static async updateActivity (activity: ActivityToUpdate): Promise<any[] | null> {
     try {
       const response = await PostgresDb.query({
         query: `
