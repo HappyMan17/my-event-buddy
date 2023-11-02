@@ -29,4 +29,25 @@ export class PostgresDb {
     console.log({ time, ms: 'poss' })
     return time
   }
+
+  static async transactin (queries: QueryProps[]): Promise<any | null> {
+    const client = await pool.connect()
+
+    try {
+      await client.query('BEGIN')
+      queries.map(async item => {
+        console.log({ item }) // todo remove
+        const { query, params } = item
+        void await client.query(query, params)
+      })
+
+      await client.query('COMMIT')
+      return { ms: 'done' }
+    } catch (e) {
+      await client.query('ROLLBACK')
+      return null
+    } finally {
+      client.release()
+    }
+  }
 }

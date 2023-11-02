@@ -5,7 +5,7 @@ import { PostgresDb } from '../postgres.database'
 export class ActivitiesModel {
   static async createAct (activitie: ActivitiesEntity): Promise<any[] | null> {
     try {
-      const response = await PostgresDb.query({
+      const createActivityQuery = {
         query: `
           INSERT INTO activities 
           (
@@ -27,7 +27,22 @@ export class ActivitiesModel {
           activitie.is_by_percentage.toString(),
           activitie.has_been_done.toString()
         ]
-      })
+      }
+      const has_activity = true
+      const updateEventQuery = {
+        query: `
+          UPDATE events
+          SET has_activity = $1
+          WHERE event_id = $2;
+        `,
+        params: [
+          has_activity.toString(),
+          activitie.event_id
+        ]
+      }
+
+      const response = await PostgresDb.transactin([createActivityQuery, updateEventQuery])
+
       return response
     } catch (error) {
       return null

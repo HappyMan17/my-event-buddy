@@ -96,7 +96,7 @@ export class EventController {
     const newFilePath = `./src/uploads/event_logos/eventLogo_${updateEventDto?.event_id}.jpg`
     await renameFile('./src/uploads/profile_images/eventLogo.jpg', newFilePath)
 
-    updateEventDto!.logo = `eventLogo__${updateEventDto?.event_id}.jpg`
+    updateEventDto!.logo = `eventLogo_${updateEventDto?.event_id}.jpg`
     // console.log({ dto: updateUserDto!.profile_image })
     this.eventRepository.updateImage(updateEventDto!)
       .then(async (event) => {
