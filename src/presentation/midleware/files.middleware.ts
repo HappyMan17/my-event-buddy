@@ -1,4 +1,5 @@
 import { NextFunction, Response, Request } from 'express'
+import fs from 'fs'
 import multer from 'multer'
 
 export class FileMiddleware {
@@ -14,6 +15,10 @@ export class FileMiddleware {
 
   manageFile = (req: Request, res: Response, next: NextFunction) => {
     try {
+      if (!fs.existsSync(this.saveFolder)) {
+        fs.mkdirSync(this.saveFolder)
+      }
+
       const storage = multer.diskStorage({
         destination: (req, file, cb) => {
           cb(null, this.saveFolder)
