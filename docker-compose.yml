@@ -32,6 +32,14 @@ services:
     ports:
     - "3000:3000"
 
+  react-app:
+    build:
+      context: ../my_event_buddy_front
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+    - "8000:8000"
+
   admin:
     image: adminer
     restart: always
