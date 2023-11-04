@@ -6,14 +6,15 @@ import { EventEntityMapper } from '../mappers'
 
 export class EventDatasourceImpl implements EventDatasource {
   async create (createEventDto: EventDto): Promise<EventEntity> {
-    const { user_id, event_name, description, type, logo } = createEventDto
+    const { user_id, event_date, event_name, description, type, logo } = createEventDto
 
     try {
       // 1. Se pueden crear eventos con el mismo nombre?
-
+      console.log({ date: event_date, type: typeof event_date })
       // 2. Event.
       const newEvent = new EventEntity(
         UuidAdapter.generateV4uuid(),
+        event_date,
         user_id,
         event_name,
         description,
@@ -31,6 +32,7 @@ export class EventDatasourceImpl implements EventDatasource {
 
       return new EventEntity(
         newEvent.event_id,
+        event_date,
         user_id,
         event_name,
         description,

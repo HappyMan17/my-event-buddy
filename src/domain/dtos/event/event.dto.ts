@@ -3,6 +3,7 @@ import { EventToUpdate, type EventUpdateLogo } from '../types'
 export class EventDto {
   private constructor (
     public user_id: string,
+    public event_date: Date,
     public event_name: string,
     public description: string,
     public type: string,
@@ -13,6 +14,7 @@ export class EventDto {
 
   static create (object: Record<string, any | null>): [string?, EventDto?] {
     const {
+      event_date,
       event_name,
       description,
       type,
@@ -20,6 +22,7 @@ export class EventDto {
     } = object
 
     if (!object.user_id) return ['Missing user id', undefined]
+    if (!event_date) return ['Missing event date', undefined]
     if (!event_name) return ['Missing event name', undefined]
     if (!description) return ['Missing event description', undefined]
     if (!type) return ['Missing event type', undefined]
@@ -28,6 +31,7 @@ export class EventDto {
       undefined,
       new EventDto(
         object.user_id,
+        new Date(event_date),
         event_name,
         description,
         type,

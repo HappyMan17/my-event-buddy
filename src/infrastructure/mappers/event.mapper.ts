@@ -8,9 +8,10 @@ export class EventEntityMapper {
    */
   static eventEntityFromObject (object: Record<string, any>): EventEntity {
     try {
-      const { event_id, user_id, event_name, description, type, logo, has_activity, has_been_done } = object
+      const { event_id, event_date, user_id, event_name, description, type, logo, has_activity, has_been_done } = object
 
       if (!event_id) throw CustomError.badRequest('Missing event id')
+      if (!event_date) throw CustomError.badRequest('Missing event date')
       if (!user_id) throw CustomError.badRequest('Missing user id')
       if (!event_name) throw CustomError.badRequest('Missing event name')
       if (!description) throw CustomError.badRequest('Missing event description')
@@ -18,6 +19,7 @@ export class EventEntityMapper {
 
       return new EventEntity(
         event_id,
+        event_date,
         user_id,
         event_name,
         description,
