@@ -5,11 +5,13 @@ import { PostgresDb } from '../postgres.database'
 export class EventModel {
   static async create (event: EventEntity): Promise<any[] | null> {
     try {
+      console.log({ date: event.event_date, iso: event.event_date.toISOString() })
       const response = await PostgresDb.query({
         query: `
           INSERT INTO events 
           (
             event_id,
+            event_date,
             user_id,
             event_name,
             description,
@@ -17,10 +19,11 @@ export class EventModel {
             logo,
             has_activity,
             has_been_done
-          ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8);
+          ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9);
         `,
         params: [
           event.event_id,
+          event.event_date.toISOString(),
           event.user_id,
           event.event_name,
           event.description,
