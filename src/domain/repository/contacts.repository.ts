@@ -3,6 +3,6 @@ import { ContactsEntity } from '../entities/contacts.entity'
 
 export abstract class ContactsRepository {
   abstract create (createContactsDto: ContactsDto): Promise <ContactsEntity>
-  abstract getContacts (contactId: string): Promise <ContactsEntity>
-  abstract update (contacts: Contacts): Promise <Contacts>
+  abstract getContacts (): Promise <ContactsEntity[]>
+  abstract getContactById (contacts: Contacts): Promise <ContactsEntity>
 }

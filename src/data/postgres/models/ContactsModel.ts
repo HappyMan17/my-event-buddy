@@ -19,14 +19,14 @@ export class ContactsModel {
     }
   }
 
-  static async getContactsBy ({ field, value }: GetContactsByProps): Promise<any[] | null> {
+  static async getContactBy ({ field, value }: GetContactsByProps): Promise<any[] | null> {
     try {
       const response = await PostgresDb.query({
         query: `SELECT * FROM contacts WHERE ${field} = $1;`,
         params: [value]
       })
 
-      if (response?.length === 0) {
+      if (!response || response.length === 0) {
         return null
       }
       return response
@@ -59,7 +59,7 @@ export class ContactsModel {
   }
   */
 
-  static async addContacts (contacts: ContactsEntity): Promise<any[] | null> {
+  static async create (contacts: ContactsEntity): Promise<any[] | null> {
     try {
       const response = await PostgresDb.query({
         query: `
@@ -67,13 +67,17 @@ export class ContactsModel {
           (
             contact_id,
             user_id,
-            friend_id
-          ) VALUES ($1, $2, $3);
+            friend_id,
+            has_associated_event,
+            has_pending_request
+          ) VALUES ($1, $2, $3, $4, $5);
         `,
         params: [
-          contacts.contact_id,
+          contacts.contact_id!,
           contacts.user_id,
-          contacts.friend_id
+          contacts.friend_id,
+          false.toString(),
+          false.toString()
         ]
       })
 
