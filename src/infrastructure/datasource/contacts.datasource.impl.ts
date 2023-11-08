@@ -3,10 +3,9 @@ import { ContactsDatasource, CustomError, ContactsEntity, ContactsDto } from '..
 import { ContactsEntityMapper } from '../mappers/contacts.mapper'
 
 export class ContactsDatasourceImpl implements ContactsDatasource {
-  async getContactById (getContactsDto: { contact_id: string }): Promise<ContactsEntity> {
-    const { contact_id } = getContactsDto
+  async getContactById (contactId: string): Promise<ContactsEntity> {
     try {
-      const contact = await ContactsModel.getContactBy({ field: 'contact_id', value: contact_id })
+      const contact = await ContactsModel.getContactBy({ field: 'contact_id', value: contactId })
 
       if (!contact) {
         throw CustomError.badRequest('Could not get the contact')
