@@ -8,16 +8,32 @@ export class ContactsEntityMapper {
    */
   static contactsEntityFromObject (object: Record<string, any>): ContactsEntity {
     try {
-      const { contact_id, user_id, friend_id } = object
-
-      if (!contact_id) throw CustomError.badRequest('Missing user_')
-      if (!user_id) throw CustomError.badRequest('Missing nameuser_')
-      if (!friend_id) throw CustomError.badRequest('Missing nick name')
-
-      return new ContactsEntity(
+      const {
         contact_id,
         user_id,
-        friend_id
+        friend_id,
+        has_associated_event,
+        has_pending_request,
+        user_name,
+        nick_name,
+        email,
+        profile_image
+      } = object
+
+      if (!contact_id) throw CustomError.badRequest('Missing contact id')
+      if (!user_id) throw CustomError.badRequest('Missing user id')
+      if (!friend_id) throw CustomError.badRequest('Missing friend id')
+
+      return new ContactsEntity(
+        user_id,
+        friend_id,
+        has_associated_event,
+        has_pending_request,
+        contact_id,
+        user_name,
+        nick_name,
+        email,
+        profile_image
       )
     } catch (error) {
       throw CustomError.internalServer('User not created.')

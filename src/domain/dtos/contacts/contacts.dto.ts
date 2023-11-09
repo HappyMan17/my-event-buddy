@@ -12,12 +12,14 @@ export class ContactsDto {
       friend_id
     } = object
 
+    // if (!object.userId) return ['Missing user name', undefined]
     if (!user_id) return ['Missing user name', undefined]
     if (!friend_id) return ['Missing friend name', undefined]
 
     return [
       undefined,
       {
+        // user_id: object.userId,
         user_id,
         friend_id
       }

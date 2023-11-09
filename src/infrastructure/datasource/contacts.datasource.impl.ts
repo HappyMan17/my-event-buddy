@@ -1,3 +1,4 @@
+import { UuidAdapter } from '../../config'
 import { ContactsModel } from '../../data/postgres'
 import { ContactsDatasource, CustomError, ContactsEntity, ContactsDto } from '../../domain'
 import { ContactsEntityMapper } from '../mappers/contacts.mapper'
@@ -29,7 +30,8 @@ export class ContactsDatasourceImpl implements ContactsDatasource {
         user_id,
         friend_id,
         false,
-        false
+        false,
+        UuidAdapter.generateV4uuid()
       ))
 
       if (!contact) {
