@@ -39,17 +39,37 @@ export class UserController {
   }
 
   /**
+   * get user by jwt id
+   * @param req
+   * @param res
+   * @returns http response
+   */
+  getUser = async (req: Request, res: Response) => {
+    const [error, userByIdDto] = UpdateUserDto.userById(req.body)
+
+    if (error) return res.status(400).json({ error })
+
+    this.userRepository.getUserById(userByIdDto!)
+      .then(async (user) => {
+        res.status(200).json({
+          user
+        })
+      })
+      .catch(error => this.handleError(error, res))
+  }
+
+  /**
    * get user by id
    * @param req
    * @param res
    * @returns http response
    */
   getUserById = async (req: Request, res: Response) => {
-    const [error, userByIdDto] = UpdateUserDto.userById(req.body)
+    const userId = req.params.userId
 
-    if (error) return res.status(400).json({ error })
+    if (!userId) return res.status(400).json({ error: 'User id not found' })
 
-    this.userRepository.getUserById(userByIdDto!)
+    this.userRepository.getUserById({ user_id: userId })
       .then(async (user) => {
         res.status(200).json({
           user
