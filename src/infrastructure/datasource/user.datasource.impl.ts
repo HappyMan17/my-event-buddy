@@ -24,6 +24,25 @@ export class UserDatasourceImpl implements UserDatasource {
     }
   }
 
+  async getUserBy (object: { key: string, value: string }): Promise<UserEntity> {
+    try {
+      const user = await UserModel.getUserBy({ field: object.key, value: object.value })
+
+      if (!user) {
+        throw CustomError.badRequest('Could not get the user')
+      }
+
+      const users = user.map(user => UserEntityMapper.userEntityFromObject(user))
+
+      return users[0]
+    } catch (error) {
+      if (error instanceof CustomError) {
+        throw error
+      }
+      throw CustomError.internalServer()
+    }
+  }
+
   async update (updateUserDto: UpdateUserDto): Promise<UserToUpdate> {
     const { user_id, user_name, nick_name, profile_image } = updateUserDto
     try {

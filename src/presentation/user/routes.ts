@@ -22,6 +22,8 @@ export class UserRoutes {
     router.put('/update', AuthMiddleware.validateJWT, controller.updateUser)
     router.put('/upload', multerUpload.manageFile, controller.updateUserProfileImage)
 
+    router.get('/:key/:value', AuthMiddleware.validateJWT, controller.getUserBy)
+
     router.get('/:userId', AuthMiddleware.validateJWT, controller.getUserById)
 
     // default url
