@@ -32,6 +32,17 @@ export class ContactController {
       .catch(error => this.handleError(error, res))
   }
 
+  getUserContacts = async (req: Request, res: Response): Promise<void> => {
+    const response = await ContactsModel.getContactBy({ field: 'user_id', value: req.body.user_id })
+    if (response && response.length > 0) {
+      // mapping
+      const contacts = response.map(contact => ContactsEntityMapper.contactsEntityFromObject(contact))
+      res.status(200).json(contacts)
+    } else {
+      res.status(400).json({ message: 'error getting user contacts' })
+    }
+  }
+
   // updateEvent = async (req: Request, res: Response) => {
   //   const [error, eventToUpdate] = EventDto.update(req.body)
 

@@ -15,7 +15,7 @@ export class ContactRoutes {
     const controller = new ContactController(EventRepository)
 
     // get user contacts
-    // router.get('/', AuthMiddleware.validateJWT, controller.getUserEvents)
+    router.get('/', AuthMiddleware.validateJWT, controller.getUserContacts)
 
     // routes:
     router.get('/all', controller.getContacts)
