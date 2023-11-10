@@ -11,14 +11,14 @@ export class ContactsDto {
       friend_id
     } = object
 
-    if (!object.userId) return ['Missing user name', undefined]
+    if (!object.user_id) return ['Missing user id', undefined]
     // if (!user_id) return ['Missing user name', undefined]
     if (!friend_id) return ['Missing friend name', undefined]
 
     return [
       undefined,
       {
-        user_id: object.userId,
+        user_id: object.user_id,
         // user_id,
         friend_id
       }
