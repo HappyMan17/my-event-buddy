@@ -32,7 +32,7 @@ export class ContactsModel {
         query:
         `
           SELECT 
-            c.user_id, c.friend_id, c.has_associated_event, c.has_pending_request,
+            c.contact_id, c.user_id, c.friend_id, c.has_associated_event, c.has_pending_request,
             u.user_name, u.nick_name, u.email, u.profile_image
           FROM contacts c
             JOIN users u ON c.friend_id = u.user_id
