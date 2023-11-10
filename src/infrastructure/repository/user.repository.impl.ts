@@ -14,6 +14,14 @@ export class UserRepositoryImpl implements UserRepository {
     })
   }
 
+  async getUserBy (object: { key: string, value: string }): Promise<UserEntity> {
+    return await new Promise((resolve) => {
+      resolve(
+        this.userDatasource.getUserBy(object)
+      )
+    })
+  }
+
   async update (updateUserDto: UpdateUserDto): Promise<UserToUpdate> {
     return await new Promise((resolve) => {
       resolve(

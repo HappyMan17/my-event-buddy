@@ -16,11 +16,15 @@ export class UserRoutes {
     const multerUpload = new FileMiddleware('userProfileImage')
 
     // routes:
-    router.get('/', AuthMiddleware.validateJWT, controller.getUserById)
+    router.get('/', AuthMiddleware.validateJWT, controller.getUser)
     // router.put('/update', multerUpload.manageFile, controller.updateUser)
     // router.put('/update', asyncMiddlewareWrapper(AuthMiddleware.validateJWT), controller.updateUser)
     router.put('/update', AuthMiddleware.validateJWT, controller.updateUser)
     router.put('/upload', multerUpload.manageFile, controller.updateUserProfileImage)
+
+    router.get('/:key/:value', AuthMiddleware.validateJWT, controller.getUserBy)
+
+    router.get('/:userId', AuthMiddleware.validateJWT, controller.getUserById)
 
     // default url
     router.use('/*', (req, res) => {

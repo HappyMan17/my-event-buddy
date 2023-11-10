@@ -3,6 +3,7 @@ import { AuthRoutes } from './auth/routes'
 import { UserRoutes } from './user/routes'
 import { EventRoutes } from './event/routes'
 import { ActivitiesRoutes } from './activities/routes'
+import { ContactRoutes } from './contacts/routes'
 // import { AuthMiddleware } from "./middleware/auth.middleware";
 
 export class AppRoutes {
@@ -20,6 +21,8 @@ export class AppRoutes {
     router.use('/api/event', EventRoutes.routes)
 
     router.use('/api/activity', ActivitiesRoutes.routes)
+
+    router.use('/api/contact', ContactRoutes.routes)
 
     router.get('/', (req, res) => {
       res.json({ message: 'main route' })

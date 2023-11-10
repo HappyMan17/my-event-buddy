@@ -54,7 +54,7 @@ export class EventModel {
   static async getEventsByUserId (userId: string): Promise<any[] | null> {
     try {
       const response = await PostgresDb.query({
-        query: 'SELECT * FROM events WHERE user_id = $1;',
+        query: 'SELECT * FROM events WHERE user_id = $1 AND has_been_done = false;',
         params: [userId]
       })
       return response
