@@ -10,6 +10,7 @@ export interface Event {
 
 export interface EventToUpdate {
   event_id: string;
+  event_date: Date;
   event_name: string;
   description: string;
   type: string;

@@ -101,15 +101,17 @@ export class EventModel {
         query: `
           UPDATE events 
           SET (
+            event_date,
             event_name,
             description,
             type,
             has_activity,
             has_been_done
-          ) = ($1, $2, $3, $4, $5)
-          WHERE event_id = $6;
+          ) = ($1, $2, $3, $4, $5, $6)
+          WHERE event_id = $7;
         `,
         params: [
+          event.event_date.toISOString(),
           event.event_name,
           event.description,
           event.type,

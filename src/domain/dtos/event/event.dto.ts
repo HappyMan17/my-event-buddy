@@ -42,6 +42,7 @@ export class EventDto {
 
   static update (object: Record<string, any | null>): [string?, EventToUpdate?] {
     const {
+      event_date,
       event_id,
       event_name,
       description,
@@ -50,6 +51,7 @@ export class EventDto {
       has_been_done
     } = object
 
+    if (!event_date) return ['Missing event date', undefined]
     if (!event_id) return ['Missing event id', undefined]
     if (!event_name) return ['Missing event name', undefined]
     if (!description) return ['Missing event description', undefined]
@@ -60,6 +62,7 @@ export class EventDto {
     return [
       undefined,
       {
+        event_date: new Date(event_date),
         event_id,
         event_name,
         description,
