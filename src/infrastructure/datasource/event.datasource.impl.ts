@@ -93,7 +93,7 @@ export class EventDatasourceImpl implements EventDatasource {
   }
 
   async updateEvent (eventToUpdate: EventToUpdate): Promise<EventToUpdate> {
-    const { event_id, event_name, description, type, has_activity, has_been_done } = eventToUpdate
+    const { event_id, event_date, event_name, description, type, has_activity, has_been_done } = eventToUpdate
 
     try {
       // 1. Se pueden crear eventos con el mismo nombre?
@@ -101,6 +101,7 @@ export class EventDatasourceImpl implements EventDatasource {
       // 2. Event.
       const newEvent = {
         event_id,
+        event_date,
         event_name,
         description,
         type,
