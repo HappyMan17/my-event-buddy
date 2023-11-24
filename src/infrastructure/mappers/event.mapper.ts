@@ -1,4 +1,5 @@
 import { CustomError, EventEntity } from '../../domain'
+import { EventContact } from '../../domain/dtos'
 
 export class EventEntityMapper {
   /**
@@ -28,6 +29,27 @@ export class EventEntityMapper {
         has_activity,
         has_been_done
       )
+    } catch (error) {
+      throw CustomError.internalServer('Missing some event fields.')
+    }
+  }
+
+  /**
+   * Builds an event_contact entity from the db response
+   * @param object
+   * @returns event_contact
+   */
+  static eventContactFromObject (object: Record<string, any>): EventContact {
+    try {
+      const { event_id, contact_id } = object
+
+      if (!event_id) throw CustomError.badRequest('Missing event id')
+      if (!contact_id) throw CustomError.badRequest('Missing contact id')
+
+      return {
+        event_id,
+        contact_id
+      }
     } catch (error) {
       throw CustomError.internalServer('Missing some event fields.')
     }

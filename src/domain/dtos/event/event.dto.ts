@@ -1,4 +1,4 @@
-import { EventToUpdate, type EventUpdateLogo } from '../types'
+import { EventContact, EventToUpdate, type EventUpdateLogo } from '../types'
 
 export class EventDto {
   private constructor (
@@ -83,6 +83,24 @@ export class EventDto {
       {
         event_id: eventId,
         logo: ''
+      }
+    ]
+  }
+
+  static getEventContact (object: Record<string, any | null>): [string?, EventContact?] {
+    const {
+      event_id,
+      contact_id
+    } = object
+
+    if (!event_id) return ['Missing event id', undefined]
+    if (!contact_id) return ['Missing contact id', undefined]
+
+    return [
+      undefined,
+      {
+        event_id,
+        contact_id
       }
     ]
   }

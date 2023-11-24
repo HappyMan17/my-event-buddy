@@ -24,6 +24,12 @@ export class EventRoutes {
     // create user
     router.post('/create', AuthMiddleware.validateJWT, controller.createEvent)
 
+    // create user
+    router.post('/add/contact', AuthMiddleware.validateJWT, controller.addEventContact)
+
+    // get contacts:
+    router.post('/contacts', AuthMiddleware.validateJWT, controller.getEventContacts)
+
     // update event
     router.put('/update', AuthMiddleware.validateJWT, controller.updateEvent)
 

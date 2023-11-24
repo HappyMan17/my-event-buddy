@@ -41,7 +41,7 @@ export class ActivitiesModel {
         ]
       }
 
-      const response = await PostgresDb.transactin([createActivityQuery, updateEventQuery])
+      const response = await PostgresDb.transaction([createActivityQuery, updateEventQuery])
 
       return response
     } catch (error) {
