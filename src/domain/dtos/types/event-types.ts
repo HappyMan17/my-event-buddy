@@ -10,6 +10,7 @@ export interface Event {
 
 export interface EventToUpdate {
   event_id: string;
+  event_date: Date;
   event_name: string;
   description: string;
   type: string;
@@ -20,4 +21,10 @@ export interface EventToUpdate {
 export interface EventUpdateLogo {
   event_id: string,
   logo?: string,
+}
+
+export interface EventContact {
+  event_contacts_id?: string,
+  event_id: string,
+  contact_id: string,
 }

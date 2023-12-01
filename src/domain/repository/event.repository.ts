@@ -1,4 +1,4 @@
-import { EventDto, EventToUpdate, EventUpdateLogo } from '../dtos'
+import { EventContact, EventDto, EventToUpdate, EventUpdateLogo } from '../dtos'
 import { EventEntity } from '../entities/event.entity'
 
 export abstract class EventRepository {
@@ -6,4 +6,6 @@ export abstract class EventRepository {
   abstract updateImage (eventDto: EventUpdateLogo): Promise<EventUpdateLogo>
   abstract getEvent (eventId: string): Promise<EventEntity>
   abstract updateEvent (eventToUpdate: EventToUpdate): Promise<EventToUpdate>
+  abstract getEventContacts (eventId: string): Promise<EventContact[]>
+  abstract addEventContact (eventContact: EventContact): Promise<EventContact[]>
 }

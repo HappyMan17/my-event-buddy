@@ -1,11 +1,10 @@
 import { EventEntity } from '../../../domain'
-import { EventToUpdate, EventUpdateLogo } from '../../../domain/dtos'
+import { EventContact, EventToUpdate, EventUpdateLogo } from '../../../domain/dtos'
 import { PostgresDb } from '../postgres.database'
 
 export class EventModel {
   static async create (event: EventEntity): Promise<any[] | null> {
     try {
-      console.log({ date: event.event_date, iso: event.event_date.toISOString() })
       const response = await PostgresDb.query({
         query: `
           INSERT INTO events 
@@ -101,15 +100,17 @@ export class EventModel {
         query: `
           UPDATE events 
           SET (
+            event_date,
             event_name,
             description,
             type,
             has_activity,
             has_been_done
-          ) = ($1, $2, $3, $4, $5)
-          WHERE event_id = $6;
+          ) = ($1, $2, $3, $4, $5, $6)
+          WHERE event_id = $7;
         `,
         params: [
+          event.event_date.toISOString(),
           event.event_name,
           event.description,
           event.type,
@@ -117,6 +118,52 @@ export class EventModel {
           event.has_been_done.toString(),
           event.event_id
         ]
+      })
+      return response
+    } catch (error) {
+      return null
+    }
+  }
+
+  static async addContactToEvent (object: EventContact): Promise<any[] | null> {
+    try {
+      const has_pending_request = false
+      console.log({ object })
+      const response = await PostgresDb.query({
+        query: `
+          INSERT INTO event_contacts 
+          (
+            event_contacts_id,
+            event_id,
+            contact_id,
+            has_pending_request
+          ) VALUES ($1, $2, $3, $4);
+        `,
+        params: [
+          object.event_contacts_id!,
+          object.event_id,
+          object.contact_id,
+          has_pending_request.toString()
+        ]
+      })
+
+      return response
+    } catch (error) {
+      return null
+    }
+  }
+
+  static async getEventContacts (eventId: string): Promise<any[] | null> {
+    try {
+      const response = await PostgresDb.query({
+        query:
+        `
+        SELECT 
+          contact_id, 
+          event_id 
+        FROM event_contacts WHERE event_id = $1;
+        `,
+        params: [eventId]
       })
       return response
     } catch (error) {

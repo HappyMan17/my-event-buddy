@@ -1,16 +1,57 @@
 import { UuidAdapter } from '../../config'
 import { EventModel } from '../../data/postgres'
 import { CustomError, EventDatasource, EventEntity } from '../../domain'
-import { EventDto, EventToUpdate, EventUpdateLogo } from '../../domain/dtos'
+import { EventContact, EventDto, EventToUpdate, EventUpdateLogo } from '../../domain/dtos'
 import { EventEntityMapper } from '../mappers'
 
 export class EventDatasourceImpl implements EventDatasource {
+  async addEventContact (eventContact: EventContact): Promise<EventContact[]> {
+    try {
+      const newEventContact: EventContact = {
+        event_contacts_id: UuidAdapter.generateV4uuid(),
+        event_id: eventContact.event_id,
+        contact_id: eventContact.contact_id
+      }
+      const response = await EventModel.addContactToEvent(newEventContact)
+
+      if (!response) {
+        throw CustomError.badRequest('Contacts Not added to event')
+      }
+
+      return response
+    } catch (error) {
+      if (error instanceof CustomError) {
+        throw error
+      }
+      throw CustomError.internalServer()
+    }
+  }
+
+  async getEventContacts (eventId: string): Promise<EventContact[]> {
+    try {
+      const response = await EventModel.getEventContacts(eventId)
+
+      if (!response) {
+        throw CustomError.badRequest('Contacts Not found')
+      }
+
+      const contacts = response.map(contact => EventEntityMapper.eventContactFromObject(contact))
+
+      return contacts
+    } catch (error) {
+      if (error instanceof CustomError) {
+        throw error
+      }
+      throw CustomError.internalServer()
+    }
+  }
+
   async create (createEventDto: EventDto): Promise<EventEntity> {
     const { user_id, event_date, event_name, description, type, logo } = createEventDto
 
     try {
       // 1. Se pueden crear eventos con el mismo nombre?
-      console.log({ date: event_date, type: typeof event_date })
+      // console.log({ date: event_date, type: typeof event_date })
       // 2. Event.
       const newEvent = new EventEntity(
         UuidAdapter.generateV4uuid(),
@@ -93,7 +134,7 @@ export class EventDatasourceImpl implements EventDatasource {
   }
 
   async updateEvent (eventToUpdate: EventToUpdate): Promise<EventToUpdate> {
-    const { event_id, event_name, description, type, has_activity, has_been_done } = eventToUpdate
+    const { event_id, event_date, event_name, description, type, has_activity, has_been_done } = eventToUpdate
 
     try {
       // 1. Se pueden crear eventos con el mismo nombre?
@@ -101,6 +142,7 @@ export class EventDatasourceImpl implements EventDatasource {
       // 2. Event.
       const newEvent = {
         event_id,
+        event_date,
         event_name,
         description,
         type,

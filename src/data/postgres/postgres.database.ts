@@ -30,7 +30,7 @@ export class PostgresDb {
     return time
   }
 
-  static async transactin (queries: QueryProps[]): Promise<any | null> {
+  static async transaction (queries: QueryProps[]): Promise<any | null> {
     const client = await pool.connect()
 
     try {
