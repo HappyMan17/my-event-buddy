@@ -36,7 +36,7 @@ export class ContactsEntityMapper {
         profile_image
       )
     } catch (error) {
-      throw CustomError.internalServer('User not created.')
+      throw CustomError.internalServer('contact not found.')
     }
   }
 }

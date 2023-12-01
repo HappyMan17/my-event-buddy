@@ -5,22 +5,15 @@ import { ContactsEntityMapper } from '../mappers/contacts.mapper'
 
 export class ContactsDatasourceImpl implements ContactsDatasource {
   async getContactById (contactId: string): Promise<ContactsEntity> {
-    try {
-      const contact = await ContactsModel.getContactBy({ field: 'contact_id', value: contactId })
+    const response = await ContactsModel.getContactBy({ field: 'contact_id', value: contactId })
 
-      if (!contact) {
-        throw CustomError.badRequest('Could not get the contact')
-      }
-
-      const contacts = contact.map(contact => ContactsEntityMapper.contactsEntityFromObject(contact))
-
-      return contacts[0]
-    } catch (error) {
-      if (error instanceof CustomError) {
-        throw error
-      }
-      throw CustomError.internalServer()
+    if (!response) {
+      throw CustomError.badRequest('Could not create the contact')
     }
+
+    const contacts = response.map(contact => ContactsEntityMapper.contactsEntityFromObject(contact))
+
+    return contacts[0]
   }
 
   async create (contactToCreate: ContactsDto): Promise<ContactsEntity> {

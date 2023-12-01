@@ -22,3 +22,9 @@ export interface EventUpdateLogo {
   event_id: string,
   logo?: string,
 }
+
+export interface EventContact {
+  event_contacts_id?: string,
+  event_id: string,
+  contact_id: string,
+}

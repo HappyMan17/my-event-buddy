@@ -104,4 +104,35 @@ export class EventController {
       })
       .catch(error => this.handleError(error, res))
   }
+
+  addEventContact = async (req: Request, res: Response) => {
+    const [error, eventContact] = EventDto.getEventContact(req.body)
+
+    if (error) return res.status(400).json({ error })
+
+    this.eventRepository.addEventContact(eventContact!)
+      .then(async (event) => {
+        res.json({
+          event
+        })
+      })
+      .catch(error => this.handleError(error, res))
+  }
+
+  getEventContacts = async (req: Request, res: Response): Promise<void> => {
+    const eventId = req.body.event_id
+
+    if (!eventId) {
+      res.status(400).json({ message: 'error' })
+      return
+    }
+
+    this.eventRepository.getEventContacts(eventId)
+      .then(async (event) => {
+        res.json({
+          event
+        })
+      })
+      .catch(error => this.handleError(error, res))
+  }
 }
