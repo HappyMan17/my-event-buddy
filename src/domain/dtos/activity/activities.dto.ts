@@ -1,4 +1,4 @@
-import { ActivityToUpdate } from '../types'
+import { ActivityToUpdate, ActivityContact } from '../types'
 
 export class ActivitiesDto {
   private constructor (
@@ -59,6 +59,24 @@ export class ActivitiesDto {
         is_by_percentage,
         activity_id,
         has_been_done
+      }
+    ]
+  }
+
+  static getActivityContacts (object: Record<string, any | null>): [string?, ActivityContact?] {
+    const {
+      activity_id,
+      user_id
+    } = object
+
+    if (!activity_id) return ['Missing activity id', undefined]
+    if (!user_id) return ['Missing contact id', undefined]
+
+    return [
+      undefined,
+      {
+        activity_id,
+        user_id
       }
     ]
   }

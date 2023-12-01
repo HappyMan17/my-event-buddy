@@ -28,6 +28,10 @@ export class ActivitiesRoutes {
     // get by id
     router.get('/:eventId', AuthMiddleware.validateJWT, controller.getActivitiesByEventId)
 
+    router.get('/contact', AuthMiddleware.validateJWT, controller.addActivityContact)
+
+    router.get('/contacts', AuthMiddleware.validateJWT, controller.getActivityContacts)
+
     // default url
     router.use('/*', (req, res) => {
       res.status(400).json({ message: 'activitie route not found' })

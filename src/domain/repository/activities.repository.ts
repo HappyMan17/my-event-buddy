@@ -1,4 +1,4 @@
-import { ActivitiesDto, ActivityToUpdate } from '../dtos'
+import { ActivitiesDto, ActivityToUpdate, ActivityContact } from '../dtos'
 import { ActivitiesEntity } from '../entities/activities.entity'
 
 export abstract class ActivitiesRepository {
@@ -6,4 +6,6 @@ export abstract class ActivitiesRepository {
   abstract getActivitiesByEventId (userId: string): Promise<ActivitiesEntity[]>
   abstract update (activitie: ActivityToUpdate): Promise<ActivityToUpdate>
   abstract getById (eventId: string): Promise<ActivitiesEntity[]>
+  abstract getActivityContacts (eventId: string): Promise<ActivityContact[]>
+  abstract addActivityContact (activityContact: ActivityContact): Promise<ActivityContact[]>
 }

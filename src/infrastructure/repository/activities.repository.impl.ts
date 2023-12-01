@@ -1,5 +1,5 @@
 import { ActivitiesDatasource, ActivitiesEntity, ActivitiesRepository } from '../../domain'
-import { ActivitiesDto, ActivityToUpdate } from '../../domain/dtos'
+import { ActivitiesDto, ActivityContact, ActivityToUpdate } from '../../domain/dtos'
 
 export class ActivitiesRepositoryImpl implements ActivitiesRepository {
   constructor (
@@ -34,6 +34,22 @@ export class ActivitiesRepositoryImpl implements ActivitiesRepository {
     return await new Promise((resolve) => {
       resolve(
         this.activitiesDatasource.getById(eventId)
+      )
+    })
+  }
+
+  async getActivityContacts (activityId: string): Promise<ActivityContact[]> {
+    return await new Promise((resolve) => {
+      resolve(
+        this.activitiesDatasource.getActivityContacts(activityId)
+      )
+    })
+  }
+
+  async addActivityContact (activityContact: ActivityContact): Promise<ActivityContact[]> {
+    return await new Promise((resolve) => {
+      resolve(
+        this.activitiesDatasource.addActivityContact(activityContact)
       )
     })
   }

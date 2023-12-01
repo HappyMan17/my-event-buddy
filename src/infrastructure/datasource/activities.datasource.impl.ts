@@ -1,7 +1,7 @@
 import { UuidAdapter } from '../../config'
 import { ActivitiesModel } from '../../data/postgres'
 import { CustomError, ActivitiesDatasource, ActivitiesEntity } from '../../domain'
-import { ActivitiesDto, ActivityToUpdate } from '../../domain/dtos'
+import { ActivitiesDto, ActivityToUpdate, ActivityContact } from '../../domain/dtos'
 import { ActivitiesEntityMapper } from '../mappers'
 
 export class ActivitiesDatasourceImpl implements ActivitiesDatasource {
@@ -96,6 +96,47 @@ export class ActivitiesDatasourceImpl implements ActivitiesDatasource {
       }
 
       return newActivityData
+    } catch (error) {
+      if (error instanceof CustomError) {
+        throw error
+      }
+      throw CustomError.internalServer()
+    }
+  }
+
+  async addActivityContact (activityContact: ActivityContact): Promise<ActivityContact[]> {
+    try {
+      const newActivityContact: ActivityContact = {
+        activity_contacts_id: UuidAdapter.generateV4uuid(),
+        activity_id: activityContact.activity_id,
+        user_id: activityContact.user_id
+      }
+      const response = await ActivitiesModel.addContactToActivity(newActivityContact)
+
+      if (!response) {
+        throw CustomError.badRequest('Contacts Not added to activity')
+      }
+
+      return response
+    } catch (error) {
+      if (error instanceof CustomError) {
+        throw error
+      }
+      throw CustomError.internalServer()
+    }
+  }
+
+  async getActivityContacts (activityId: string): Promise<ActivityContact[]> {
+    try {
+      const response = await ActivitiesModel.getActivityContacts(activityId)
+
+      if (!response) {
+        throw CustomError.badRequest('Contacts Not found')
+      }
+
+      const contacts = response.map(contact => ActivitiesEntityMapper.activityContactFromObject(contact))
+
+      return contacts
     } catch (error) {
       if (error instanceof CustomError) {
         throw error

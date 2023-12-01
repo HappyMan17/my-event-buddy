@@ -1,5 +1,5 @@
 import { ActivitiesEntity } from '../../../domain'
-import { ActivityToUpdate } from '../../../domain/dtos'
+import { ActivityContact, ActivityToUpdate } from '../../../domain/dtos'
 import { PostgresDb } from '../postgres.database'
 
 export class ActivitiesModel {
@@ -102,6 +102,49 @@ export class ActivitiesModel {
         ]
       })
 
+      return response
+    } catch (error) {
+      return null
+    }
+  }
+
+  static async addContactToActivity (object: ActivityContact): Promise<any[] | null> {
+    try {
+      console.log({ object })
+      const response = await PostgresDb.query({
+        query: `
+          INSERT INTO activity_contacts 
+          (
+            activity_contacts_id,
+            activity_id,
+            user_id
+          ) VALUES ($1, $2, $3);
+        `,
+        params: [
+          object.activity_contacts_id!,
+          object.activity_id,
+          object.user_id
+        ]
+      })
+
+      return response
+    } catch (error) {
+      return null
+    }
+  }
+
+  static async getActivityContacts (activityId: string): Promise<any[] | null> {
+    try {
+      const response = await PostgresDb.query({
+        query:
+        `
+        SELECT 
+          user_id, 
+          activity_id 
+        FROM activity_contacts WHERE activity_id = $1;
+        `,
+        params: [activityId]
+      })
       return response
     } catch (error) {
       return null

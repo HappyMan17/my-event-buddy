@@ -96,4 +96,35 @@ export class ActivitiesController {
       })
       .catch(error => this.handleError(error, res))
   }
+
+  addActivityContact = async (req: Request, res: Response) => {
+    const [error, activityContact] = ActivitiesDto.getActivityContacts(req.body)
+
+    if (error) return res.status(400).json({ error })
+
+    this.activitieRepository.addActivityContact(activityContact!)
+      .then(async (activity) => {
+        res.json({
+          activity
+        })
+      })
+      .catch(error => this.handleError(error, res))
+  }
+
+  getActivityContacts = async (req: Request, res: Response): Promise<void> => {
+    const activityId = req.body.activity_id
+
+    if (!activityId) {
+      res.status(400).json({ message: 'error' })
+      return
+    }
+
+    this.activitieRepository.getActivityContacts(activityId)
+      .then(async (activity) => {
+        res.json({
+          activity
+        })
+      })
+      .catch(error => this.handleError(error, res))
+  }
 }
